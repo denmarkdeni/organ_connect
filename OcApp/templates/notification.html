@@ -4,43 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin-Dashboard</title>
-    <link rel="stylesheet" href="/static/css/dashboard.css">
-    <style>
-        body{
-            display: block;
-            justify-items:center;
-        }
-        .notification {
-            background-color: #f9f9f9;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .notification p {
-            font-size: 16px;
-            margin: 0;
-        }
-        .notification a {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .notification button {
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
-            background-color: #28a745;
-            color: white;
-            margin-right: 10px;
-        }
-        .notification button:disabled {
-            background-color: #ccc;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/notification.css">
+    
 </head>
 <body>
 
@@ -73,6 +38,19 @@
         <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
     </div>
     {% endfor %}
+
+    {% for notification in notifications %}
+    <div class="notification">
+        <p>{{ notification.message }}</p>
+        
+        {% if notification.scheduled_time %}
+        <p><strong>Operation Scheduled:</strong> {{ notification.scheduled_time }}</p>
+        {% endif %}
+
+        <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
+    </div>
+    {% endfor %}
+
 
 </body>
 </html>

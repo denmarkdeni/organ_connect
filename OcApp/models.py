@@ -89,6 +89,7 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     donor_confirmed = models.BooleanField(default=False)
     recipient_confirmed = models.BooleanField(default=False)
+    scheduled_time = models.DateTimeField(null=True, blank=True)  
 
     def __str__(self):
         return f"Notification from {self.sender.username} to {self.user.username} - {self.status}"

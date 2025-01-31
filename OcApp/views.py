@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.utils.timezone import make_aware
 from .models import UserInfo, Donor, Recipient ,Organ, OrganAllocation, Notification
-import json
+import json, datetime
 
 def index(request):
     return render(request,'index.html')
@@ -182,10 +183,6 @@ def organ_matching(request):
 
     return render(request, 'organ_matching.html')
 
-from django.http import JsonResponse
-import json
-from .models import Organ, OrganAllocation, Recipient
-
 def create_organ_request(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -297,3 +294,30 @@ def mark_as_read(request, notification_id):
     notification.save()
 
     return redirect('notification')
+
+def facility_schedule(request):
+    notifications = Notification.objects.all()
+    return render(request, 'facility_schedule.html',{'notifications':notifications})
+
+@login_required
+def schedule_operation(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id)
+
+    # Only allow facility users to schedule
+    if request.user.userinfo.userRole =="facility":  
+        if request.method == "POST":
+            schedule_time_str = request.POST.get("schedule_time")
+            schedule_time = make_aware(datetime.datetime.strptime(schedule_time_str, "%Y-%m-%dT%H:%M"))
+
+            new_notification = Notification(
+                user=notification.user,  
+                sender=request.user,  
+                message=f"Your operation has been scheduled for {schedule_time}",
+                status="unread",  
+                scheduled_time=schedule_time
+            )
+
+            new_notification.save() 
+            return redirect("facility_schedule")
+
+    return redirect("error_page")

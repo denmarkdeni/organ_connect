@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility - Schedule Operation</title>
+    <link rel="stylesheet" href="/static/css/notification.css">
+</head>
+<body>
+
+    <h1>Schedule Operation for Confirmed Donor & Recipient</h1>
+
+    {% for notification in notifications %}
+        {% if notification.donor_confirmed or notification.recipient_confirmed %}
+            {% if not notification.scheduled_time %}
+                <div class="notification">
+                    <p>Confirmed Donor & Recipient: {{ notification.user.username }}</p>
+                    <form method="post" action="{% url 'schedule_operation' notification.id %}">
+                        {% csrf_token %}
+                        <label for="schedule_time">Select Date & Time:</label>
+                        <input type="datetime-local" name="schedule_time" required>
+                        <button type="submit">Send Schedule</button>
+                    </form>
+                </div>
+            {% endif %}
+        {% elif notification.scheduled_time %}
+            <div class="notification">
+                <p>Scheduled for: {{ notification.scheduled_time }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+</body>
+</html>
