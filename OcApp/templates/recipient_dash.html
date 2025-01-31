@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside>
+    <h2>Organ Connect</h2>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Profile Overview</a>
+        <a href="#">Manage Profile</a>
+        <a href="{% url 'notification' %}">Notifications</a>
+        <a href="{% url 'organ_request' %}">Request Organ</a>
+        <a href="{% url 'log_out' %}" class="logout-btn">Logout</a>
+    </nav>
+</aside>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Header -->
+    <div class="header">
+        <!-- Profile Overview Section -->
+        <div class="profile">
+            <div class="profile-info">
+                <h3>John Doe</h3>
+                <p>Email: john.doe@example.com</p>
+                <p>User Role: recipient</p>
+            </div>
+            <div class="profile-img">
+                <img src="/static/images/doctor_profile.png" alt="no">
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Section -->
+    <div class="section">
+        <h3>Home</h3>
+        <p>Welcome to the Organ Connect dashboard! Here, you can manage your profile, view notifications, and perform various actions based on your role.</p>
+    </div>
+
+    <!-- Manage Profile Section -->
+    <div class="section">
+        <h3>Manage Profile</h3>
+        <p>Click here to edit your profile information, update your contact details, or change your password.</p>
+    </div>
+
+    <!-- Notifications Section -->
+    <div class="section">
+        <h3>Notifications</h3>
+        <p>You have 3 new notifications. Check them for updates regarding your organ donation status and recipient information.</p>
+    </div>
+
+    <!-- Logout Button -->
+    <a href="#" class="logout-btn">Logout</a>
+</div>
+
+</body>
+</html>
