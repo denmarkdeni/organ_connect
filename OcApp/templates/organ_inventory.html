@@ -72,7 +72,7 @@
                     <th>Organ Type</th>
                     <th>Status</th>
                     <th>Donor</th>
-                    <th>Recipient</th>
+                    <th>Blood Type</th>
                     <th>Date Added</th>
                 </tr>
             </thead>
@@ -81,9 +81,9 @@
                     <tr>
                         <td>{{ organ.organ_type }}</td>
                         <td>{{ organ.status }}</td>
-                        <td>{{ organ.donor.name }}</td>
-                        <td>{{ organ.recipient.name }}</td>
-                        <td>{{ organ.date_added }}</td>
+                        <td>{{ organ.donor.fullname }}</td>
+                        <td>{{ organ.donor.blood_type }}</td>
+                        <td>{{ organ.added_date }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

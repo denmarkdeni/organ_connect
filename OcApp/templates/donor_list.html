@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor List & Organ Upload</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid black; padding: 10px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        form { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Donor List & Organ Upload</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Blood Type</th>
+                <th>Medical History</th>
+                <th>Organs</th>
+                <th>Availability</th>
+                <th>Upload Organ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for donor in donors %}
+            <tr>
+                <td>{{ donor.id }}</td>
+                <td>{{ donor.fullname }}</td>
+                <td>{{ donor.blood_type }}</td>
+                <td>{{ donor.medical_history }}</td>
+                <td>{{ donor.organs }}</td>
+                <td>{{ donor.is_available }}</td>
+                <td>
+                    <form id="organForm-{{ donor.id }}" onsubmit="uploadOrgan(event, {{ donor.id }})">
+                        <select name="organ_name" required>
+                            <option value="">Select Organ</option>
+                            <option value="Heart">Heart</option>
+                            <option value="Liver">Liver</option>
+                            <option value="Kidney">Kidney</option>
+                            <option value="Lungs">Lungs</option>
+                            <option value="Pancreas">Pancreas</option>
+                            <option value="Intestines">Intestines</option>
+                            <option value="Cornea">Cornea</option>
+                        </select>
+                    
+                        <select name="status" required>
+                            <option value="Available">Available</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Transplanted">Transplanted</option>
+                        </select>
+                    
+                        <input type="hidden" name="donor_id" value="{{ donor.id }}">
+                        <button type="submit">Upload</button>
+                    </form>                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function uploadOrgan(event, donorId) {
+            event.preventDefault();
+
+            let form = document.getElementById(`organForm-${donorId}`);
+            let formData = new FormData(form);
+
+            fetch("{% url 'upload_organ' %}", {
+                method: "POST",
+                body: formData,
+                headers: { "X-CSRFToken": "{{ csrf_token }}" }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error );
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>

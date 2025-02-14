@@ -16,37 +16,48 @@
             <!-- Recipient Information -->
             <div class="card p-3 mb-4">
                 <h5>Recipient Information</h5>
+                
+                <!-- Select Recipient Dropdown -->
                 <div class="row">
+                    <div class="col-md-12">
+                        <label class="form-label">Select Recipient</label>
+                        <select class="form-control" id="recipientSelect" required>
+                            <option value="">Select a Recipient</option>
+                            {% for recipient in recipients %}
+                                <option value="{{ recipient.id }}" 
+                                    data-name="{{ recipient.fullname }}"
+                                    data-email="{{ recipient.email }}"
+                                    data-phone="{{ recipient.phone }}"
+                                    data-blood_type="{{ recipient.blood_type }}">{{ recipient.fullname }}
+                                    {{ recipient.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            
+                <!-- Prefilled Fields -->
+                <div class="row mt-3">
                     <div class="col-md-6">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" name="recipient_name" required>
+                        <input type="text" class="form-control" id="recipient_name" name="recipient_name" readonly>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" name="recipient_email" required>
+                        <input type="email" class="form-control" id="recipient_email" readonly>
                     </div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <label class="form-label">Phone</label>
-                        <input type="tel" class="form-control" name="recipient_phone" required>
+                        <input type="tel" class="form-control" id="recipient_phone" readonly>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Blood Type</label>
-                        <select class="form-control" name="recipient_blood_type" required>
-                            <option value="">Select Blood Type</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                        </select>
+                        <input type="text" class="form-control" id="recipient_blood_type" name="recipient_blood_type" readonly>
                     </div>
                 </div>
-            </div>
+            </div>            
 
             <!-- Organ Selection -->
             <div class="card p-3 mb-4">
@@ -65,11 +76,9 @@
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Availability Status</label>
+                        <label class="form-label">Status</label>
                         <select class="form-control" name="availability_status" required>
-                            <option value="">Select Availability</option>
-                            <option value="Available">Available</option>
-                            <option value="Not Available">Not Available</option>
+                            <option value="Available" selected>Available</option>
                         </select>
                     </div>
                 </div>
@@ -106,7 +115,7 @@
                     data.matching_organs.forEach(organ => {
                         let listItem = document.createElement("li");
                         listItem.classList.add("list-group-item");
-                        listItem.innerHTML = `${organ.organ_type} from ${organ.donor} - ${organ.blood_type} - Available: ${organ.status} 
+                        listItem.innerHTML = `${organ.organ_type} from ${organ.donor}  ${organ.blood_type}  Available: ${organ.status} 
                             <button class="btn btn-primary btn-sm float-end request-btn" data-organ-id="${organ.id}">Create Request</button>`;
                         resultsList.appendChild(listItem);
                     });
@@ -152,6 +161,29 @@
             .catch(error => console.error('Error:', error));
         }
     </script>
+
+    
+    <script>
+        // Recipients details
+        document.getElementById("recipientSelect").addEventListener("change", function() {
+            let selectedOption = this.options[this.selectedIndex];
+        
+            // If a recipient is selected, update fields
+            if (selectedOption.value) {
+                document.getElementById("recipient_name").value = selectedOption.getAttribute("data-name");
+                document.getElementById("recipient_email").value = selectedOption.getAttribute("data-email");
+                document.getElementById("recipient_phone").value = selectedOption.getAttribute("data-phone");
+                document.getElementById("recipient_blood_type").value = selectedOption.getAttribute("data-blood_type");
+            } else {
+                // Clear fields if no recipient is selected
+                document.getElementById("recipient_name").value = "";
+                document.getElementById("recipient_email").value = "";
+                document.getElementById("recipient_phone").value = "";
+                document.getElementById("recipient_blood_type").value = "";
+            }
+        });
+    </script>
+        
     
 </body>
 </html>

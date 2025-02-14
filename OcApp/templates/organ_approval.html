@@ -16,6 +16,7 @@
             <thead>
                 <tr>
                     <th>Recipient</th>
+                    <th>Donor</th>
                     <th>Organ Type</th>
                     <th>Blood Type</th>
                     <th>Status</th>
@@ -38,6 +39,7 @@
                     data.forEach(alloc => {
                         let row = `<tr>
                             <td>${alloc.recipient_name}</td>
+                            <td>${alloc.donor_name}</td>
                             <td>${alloc.organ_type}</td>
                             <td>${alloc.blood_type}</td>
                             <td>${alloc.status}</td>

@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.utils.timezone import make_aware
-from .models import UserInfo, Donor, Recipient ,Organ, OrganAllocation, Notification
+from .models import UserInfo, Donor, Recipient ,Organ, OrganMatch, Notification
 import json, datetime
 
 def index(request):
@@ -21,9 +21,9 @@ def register(request):
         password = request.POST['password']
         user_role = request.POST['role']
 
-        user = User.objects.create_user(username=username, email=email, password=password)
+        user = User.objects.create_user(username=username, email=email, password=password, last_name=fullname)
 
-        UserInfo.objects.create(user=user, fullname=fullname, email=email, userRole=user_role)
+        UserInfo.objects.create(user=user, email=email, userRole=user_role)
 
         messages.success(request, 'Your account has been created successfully!')
         return redirect('login')
@@ -76,7 +76,8 @@ def manage_users(request):
     return render(request,'users.html',{'users':users})
 
 def donor_console(request):
-    return render(request,'donor_console.html')
+    user = User.objects.get(id=request.user.id)
+    return render(request,'donor_console.html',{"user":user})
 
 @login_required
 def save_donor(request):
@@ -91,10 +92,12 @@ def save_donor(request):
 
             donor = Donor.objects.create(
                 user=user,
-                name=data["name"],
+                fullname=data["name"],
                 email=data["email"],
                 phone=data["phone"],
+                age=data["age"],
                 blood_type=data["bloodType"],
+                medical_history=data["medical_history"],
                 organs=", ".join(data["organs"])
             )
 
@@ -105,7 +108,8 @@ def save_donor(request):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 def organ_request(request):
-    return render(request,'organ_request.html')
+    user = User.objects.get(id=request.user.id)
+    return render(request,'organ_request.html',{"user":user})
 
 def save_organ_request(request):
     if request.method == "POST":
@@ -113,11 +117,12 @@ def save_organ_request(request):
             data = json.loads(request.body)
             organ_request = Recipient(
                 user=request.user,  # Assuming recipient is logged in
-                name=data.get('name'),
+                fullname=data.get('name'),
                 email=data.get('email'),
                 phone=data.get('phone'),
+                age=data.get('age'),
                 blood_type=data.get('bloodType'),
-                organ_needed=data.get('organNeeded'),
+                required_organ=data.get('organNeeded'),
                 urgency=data.get('urgency'),
                 disease=data.get('disease')
             )
@@ -126,6 +131,26 @@ def save_organ_request(request):
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+def donor_list(request):
+    donors = Donor.objects.all()  # Fetch all registered donors
+    return render(request, "donor_list.html", {"donors": donors})
+
+def upload_organ(request):
+    if request.method == "POST":
+        donor_id = request.POST.get("donor_id")
+        organ_name = request.POST.get("organ_name")
+        status = request.POST.get("status")
+        donor = Donor.objects.get(id=donor_id)
+
+        if Organ.objects.filter(donor=donor, organ_type=organ_name).exists():
+            return JsonResponse({"error": "Already Uploaded !"}, status=400)
+        
+        Organ.objects.create(donor=donor, organ_type=organ_name, status=status, blood_type=donor.blood_type, medical_history=donor.medical_history)
+
+        return JsonResponse({"message": "Organ uploaded successfully"})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 def organ_inventory(request):
     if request.method == 'POST':
@@ -173,7 +198,7 @@ def organ_matching(request):
         for organ in matching_organs:
             matching_results.append({
                 'id': organ.id,  # Send organ ID for request creation
-                'donor': organ.donor.name,
+                'donor': organ.donor.fullname,
                 'organ_type': organ.organ_type,
                 'blood_type': organ.blood_type,
                 'status': 'Yes' if organ.status else 'No',
@@ -181,22 +206,23 @@ def organ_matching(request):
 
         return JsonResponse({'matching_organs': matching_results})
 
-    return render(request, 'organ_matching.html')
+    recipients = Recipient.objects.all()
+    return render(request, 'organ_matching.html',{"recipients":recipients})
 
 def create_organ_request(request):
     if request.method == "POST":
         data = json.loads(request.body)
         organ_id = data.get('organ_id')
         recipient_name = data.get("recipient_name")
-        print(recipient_name)
+         
         if not organ_id:
             return JsonResponse({'success': False, 'message': 'Organ ID is required'})
 
         try:
             organ = Organ.objects.get(id=organ_id)
-            recipient = Recipient.objects.get(name = recipient_name) 
+            recipient = Recipient.objects.get(fullname = recipient_name) 
 
-            allocation = OrganAllocation.objects.create(
+            organ_match = OrganMatch.objects.create(
                 organ=organ,
                 recipient=recipient,
                 reviewed_by=request.user,  # Assuming an admin will approve later
@@ -217,11 +243,12 @@ def organ_approval(request):
 
 def get_allocations(request):
     """New API to fetch allocation data for the table"""
-    allocations = OrganAllocation.objects.all()
+    allocations = OrganMatch.objects.all()
     data = [
         {
             "id": alloc.id,
-            "recipient_name": alloc.recipient.name,  # Update based on your model field
+            "recipient_name": alloc.recipient.fullname,  # Update based on your model field
+            "donor_name": alloc.organ.donor.fullname,  
             "organ_type": alloc.organ.organ_type,
             "blood_type": alloc.recipient.blood_type,
             "status": alloc.status
@@ -235,7 +262,7 @@ def approve_organ_allocation(request, allocation_id):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            allocation = get_object_or_404(OrganAllocation, id=allocation_id)
+            allocation = get_object_or_404(OrganMatch, id=allocation_id)
 
             if data.get("action") == "approve":
                 allocation.status = "Approved"
@@ -243,16 +270,14 @@ def approve_organ_allocation(request, allocation_id):
                 allocation.recipient.status = "Matched"
                 
                 Notification.objects.create(
-                    user=allocation.organ.donor.user,
+                    receiver=allocation.organ.donor.user,
                     sender=allocation.reviewed_by,  
                     message="Organ allotment approved. Please confirm.",
-                    donor_confirmed=False,  
                 )
                 Notification.objects.create(
-                    user=allocation.recipient.user,
+                    receiver=allocation.recipient.user,
                     sender=allocation.reviewed_by,  
                     message="Organ allotment approved. Please confirm.",
-                    donor_confirmed=False,  
                 )
             elif data.get("action") == "reject":
                 allocation.status = "Rejected"
@@ -262,7 +287,7 @@ def approve_organ_allocation(request, allocation_id):
             allocation.organ.save()
             allocation.recipient.save()
 
-            return JsonResponse({"message": f"Organ allocation {allocation.status} successfully!"})
+            return JsonResponse({"message": f"Organ allocation {allocation.status} !"})
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
 

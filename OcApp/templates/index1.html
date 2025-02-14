@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Organ Connect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #9dc0c5;
+            background-repeat: no-repeat;
+            background-image: url("{% static 'images/donation3.jpg' %}");
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        header p {
+            font-size: 1.1rem;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #2c4b7a;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 0 15px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #1e3e64;
+            border-radius: 5px;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 40px 10%;
+        }
+        .card {
+            background-color: #cbe7e7;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #f4f4f9;
+        }
+        .card h3 {
+            color: #3a6ea5;
+            padding: 20px 0;
+        }
+        .card p {
+            padding: 0 20px 20px;
+            color: #666;
+        }
+        .card a {
+            display: inline-block;
+            background-color: #3a6ea5;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .card a:hover {
+            background-color: #2c4b7a;
+        }
+        .importance-list {
+            display: grid;
+            gap: 20px;
+            padding: 40px 10%;
+        }
+        .importance-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            justify-items:center;
+        }
+        .importance-item:hover {
+            transform: translateY(-5px);
+        }
+        .importance-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .importance-item h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .importance-item p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+        footer {
+            background-color: #3a6ea5;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    
+<header>
+    <h1>Organ Connect</h1>
+    <p>Connecting Donors, Recipients, and Doctors for Life-saving Transplants</p>
+</header>
+
+<nav>
+    <a href="{%  url 'register' %}">Registration</a>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="#doctors">About</a>
+    <a href="#about">Contact</a>
+</nav>
+
+<div class="importance-list">
+    <!-- Importance Item 1 -->
+    <div class="importance-item">
+        <img src="{% static 'images/donation4.jpg' %}" alt="Life-saving">
+        <h3>Saving Lives Through Timely Matches</h3>
+        <p>Organ Connect ensures that donor organs are matched with recipients in a timely manner, improving the chances of survival for transplant patients. The platform reduces delays, allowing for quicker life-saving transplants.</p>
+    </div>
+
+    <!-- Importance Item 2 -->
+    <div class="importance-item">
+        <img src="{% static 'images/donation.jpg' %}" alt="Efficiency">
+        <h3>Streamlining the Organ Donation Process</h3>
+        <p>The project simplifies the complex process of organ donation, from donor registration to transplant surgery. It connects hospitals, doctors, donors, and recipients in a way that enhances coordination and communication, ultimately making the process more efficient.</p>
+    </div>
+
+    <!-- Importance Item 3 -->
+    <div class="importance-item">
+        <img src="{% static 'images/donation2.jpg' %}" alt="Community">
+        <h3>Fostering a Community of Donors</h3>
+        <p>Organ Connect encourages people to become organ donors, raising awareness about the importance of organ donation. It creates a community where potential donors and recipients can communicate, fostering trust and understanding in the transplant system.</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Donors Section -->
+    <div class="card" id="donors">
+        <img src="{% static 'images/donor.jpg' %}" alt="Donors">
+        <h3>For Donors</h3>
+        <p>Become a life-saving hero by registering as an organ donor. Learn about eligibility and how to donate safely.</p>
+        <a href="#">Learn More</a>
+    </div>
+
+    <!-- Recipients Section -->
+    <div class="card" id="recipients">
+        <img src="{% static 'images/doctors1.jpg' %}" alt="Recipients">
+        <h3>For Recipients</h3>
+        <p>Waiting for an organ transplant? Register now to get connected with donors and healthcare providers.</p>
+        <a href="#">Learn More</a>
+    </div>
+
+    <!-- Doctors Section -->
+    <div class="card" id="doctors">
+        <img src="{% static 'images/doctors.jpg' %}" alt="Doctors">
+        <h3>For Doctors</h3>
+        <p>Healthcare professionals can register to facilitate organ matching and assist in the transplant process.</p>
+        <a href="#">Learn More</a>
+    </div>
+
+    <!-- About Section -->
+    <div class="card" id="staff">
+        <img src="{% static 'images/facility.jpg' %}" alt="About">
+        <h3>For Hospital Staffs</h3>
+        <p>Monitoring , Treating of Donors , Recipients ,Doctors in the Correct Availability Comes .</p>
+        <a href="#">Learn More</a>
+    </div>
+
+    <!-- About Section -->
+    <div class="card" id="about">
+        <img src="{% static 'images/transplantation.jpg' %}" alt="About">
+        <h3>About Organ Transplantation</h3>
+        <p>Organ transplantation is a medical procedure that saves lives. Learn more about the process, challenges, and impact.</p>
+        <a href="#">Learn More</a>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Organ Connect. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

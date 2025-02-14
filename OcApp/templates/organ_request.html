@@ -19,11 +19,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <input type="text" class="form-control" id="name" value="{{ user.last_name }}" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" id="email" value="{{ user.email }}" required>
                     </div>
                 </div>
                 <div class="row mt-3">
@@ -31,6 +31,12 @@
                         <label class="form-label">Phone</label>
                         <input type="tel" class="form-control" id="phone" required>
                     </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" required>
+                    </div>
+                </div>
+                <div class="row mt-3">
                     <div class="col-md-6">
                         <label class="form-label">Blood Type</label>
                         <select class="form-control" id="bloodType" required>
@@ -95,6 +101,7 @@
                 name: document.getElementById("name").value,
                 email: document.getElementById("email").value,
                 phone: document.getElementById("phone").value,
+                age: document.getElementById("age").value,
                 bloodType: document.getElementById("bloodType").value,
                 organNeeded: document.getElementById("organNeeded").value,
                 urgency: document.getElementById("urgency").value,
