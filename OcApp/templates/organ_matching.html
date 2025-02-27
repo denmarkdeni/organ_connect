@@ -154,6 +154,7 @@
             .then(data => {
                 if (data.success) {
                     alert("Request created successfully!");
+                    location.reload();
                 } else {
                     alert("Failed to create request: " + data.message);
                 }

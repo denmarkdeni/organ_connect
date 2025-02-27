@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class UserInfo(models.Model):
     USER_ROLE_CHOICES = [
@@ -21,11 +22,28 @@ class Hospital(models.Model):
     name = models.CharField(max_length=255)
     address = models.TextField()
     contact = models.CharField(max_length=15)
-    email = models.EmailField(unique=True)
-    admin = models.OneToOneField(User, on_delete=models.CASCADE)  # Hospital Admin
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
+    is_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
+    
+class Doctor(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="doctors")
+    specialization = models.CharField(max_length=100)
+    is_available = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Dr. {self.user.get_full_name()} - {self.specialization}"
+    
+class Staff(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE) 
+    hospital = models.ForeignKey(Hospital, on_delete=models.CASCADE, related_name="staff")
+
+    def __str__(self):
+        return f"{self.user.get_full_name()} at {self.hospital.name}"
 
 class Donor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -97,10 +115,12 @@ class OrganMatch(models.Model):
     reviewed_at = models.DateTimeField(auto_now=True)
 
 class Notification(models.Model):
+    type = models.CharField(max_length=50,default="")
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_notifications")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_notifications")
     message = models.TextField()
     is_read = models.BooleanField(default=False)
+    reply_message = models.TextField(blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

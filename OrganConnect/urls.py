@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from OcApp import views
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("chatbot/", include("chatbot.urls")),
     path('',views.index,name='index'),
     path('register/',views.register,name='register'),
     path('login/',views.login,name='login'),
@@ -43,8 +45,11 @@ urlpatterns = [
     path('get_allocations/', views.get_allocations, name='get_allocations'),
     path('approve_organ_allocation/<int:allocation_id>/', views.approve_organ_allocation, name='approve_organ_allocation'),
     path('notification', views.notification, name='notification'),
-    path('confirm_notification/<int:notification_id>/', views.confirm_notification, name='confirm_notification'),
+    path('reply-notification/<int:notification_id>/', views.reply_notification, name='reply_notification'),
     path('mark_as_read/<int:notification_id>/', views.mark_as_read, name='mark_as_read'),
     path('facility_schedule/', views.facility_schedule, name='facility_schedule'),
     path('schedule_operation/<int:notification_id>/', views.schedule_operation, name='schedule_operation'),
+    path('update_staff/', views.update_staff, name='update_staff'),
+    path('update_doctor/', views.update_doctor, name='update_doctor'),
+    path('new_hospital/', views.request_new_hospital, name='new_hospital'),
 ]

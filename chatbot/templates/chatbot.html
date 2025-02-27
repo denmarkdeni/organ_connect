@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Rasa</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .chatbox { width: 300px; height: 400px; border: 1px solid #ddd; overflow-y: scroll; padding: 10px; }
+        .user { color: blue; font-weight: bold; }
+        .bot { color: green; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Chatbot</h2>
+    <div class="chatbox" id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type a message..." onkeypress="handleKey(event)">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            let input = document.getElementById("userInput");
+            let message = input.value.trim();
+            if (message === "") return;
+
+            let chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += `<p class="user">You: ${message}</p>`;
+
+            fetch("/chatbot/chat/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatbox.innerHTML += `<p class="bot">Bot: ${data.message}</p>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+            });
+
+            input.value = "";
+        }
+
+        function handleKey(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -8,49 +8,50 @@
     
 </head>
 <body>
-
     <h1>Notifications</h1>
 
     {% for notification in notifications %}
-    <div class="notification">
-        <p>{{ notification.message }}</p>
-        
-        <!-- If it's an organ approval notification, show confirm buttons -->
-        {% if "Organ allotment approved" in notification.message %}
-        <form method="post" action="{% url 'confirm_notification' notification.id %}">
-            {% csrf_token %}
-            
-            {% if notification.donor_confirmed %}
-                <button type="button" disabled>Donor Confirmed</button>
+        <div class="notification">
+            <p>{{ notification.message }}</p>
+            <small>From: {{ notification.sender.username }} from {{ notification.sender.staff.hospital }}</small> |
+            <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
+    
+            {% if not notification.reply_message %}
+            <form method="post" class="reply-form" data-id="{{ notification.id }}">
+                {% csrf_token %}
+                <input type="text" name="reply_text" placeholder="Reply here..." required>
+                <button type="submit">Reply</button>
+            </form>
             {% else %}
-                <button type="submit" name="donor">Confirm as Donor</button>
+            <p><strong>Your Reply:</strong> {{ notification.reply_message }}</p>
             {% endif %}
-            
-            {% if notification.recipient_confirmed %}
-                <button type="button" disabled>Recipient Confirmed</button>
-            {% else %}
-                <button type="submit" name="recipient">Confirm as Recipient</button>
-            {% endif %}
-        </form>
-        {% endif %}
-        
-        <!-- Mark as Read Link -->
-        <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
-    </div>
+        </div>
     {% endfor %}
-
-    {% for notification in notifications %}
-    <div class="notification">
-        <p>{{ notification.message }}</p>
-        
-        {% if notification.scheduled_time %}
-        <p><strong>Operation Scheduled:</strong> {{ notification.scheduled_time }}</p>
-        {% endif %}
-
-        <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a>
-    </div>
-    {% endfor %}
-
-
+    
+    <script>
+    document.querySelectorAll(".reply-form").forEach(form => {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let notificationId = this.getAttribute("data-id");
+    
+            fetch(`/reply-notification/${notificationId}/`, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                }
+            });
+        });
+    });
+    </script>
+    
 </body>
 </html>

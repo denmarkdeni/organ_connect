@@ -8,9 +8,10 @@ body{
     margin: 10px 0;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 70%;
 }
 .notification p {
-    font-size: 16px;
+    font-size: 20px;
     margin: 0;
 }
 .notification a {
@@ -31,4 +32,20 @@ body{
 }
 .notification button:disabled {
     background-color: #ccc;
+}
+.notification .not-head{
+    font-size:23px;
+    margin-bottom: 4px;
+}
+.notification input {
+    font-size: 16px;
+    border-radius: 5px;
+}
+.notification label {
+    font-size: 18px;
+}
+.notification .not-time{
+    font-size:20px;
+    position: absolute;
+    left: 65%;
 }

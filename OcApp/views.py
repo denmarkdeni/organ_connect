@@ -6,8 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from django.utils.timezone import make_aware
-from .models import UserInfo, Donor, Recipient ,Organ, OrganMatch, Notification
+from .models import UserInfo, Donor, Recipient ,Organ, OrganMatch, Notification, Staff, Hospital, Doctor
 import json, datetime
+from .forms import ReplyForm
 
 def index(request):
     return render(request,'index.html')
@@ -192,6 +193,7 @@ def organ_matching(request):
         matching_organs = Organ.objects.filter(
             blood_type=recipient_blood_type,
             organ_type=organ_type,
+            status='Available'
         )
 
         matching_results = []
@@ -228,6 +230,8 @@ def create_organ_request(request):
                 reviewed_by=request.user,  # Assuming an admin will approve later
                 status="Pending",
             )
+            organ.status="Pending"
+            organ.save()
 
             return JsonResponse({'success': True, 'message': 'Organ request created successfully!'})
 
@@ -272,12 +276,14 @@ def approve_organ_allocation(request, allocation_id):
                 Notification.objects.create(
                     receiver=allocation.organ.donor.user,
                     sender=allocation.reviewed_by,  
-                    message="Organ allotment approved. Please confirm.",
+                    type = 'organ match confirmation',
+                    message=f"Hello Mr/Mrs.{allocation.organ.donor.user.last_name}, For your Donation of Organ, The Organ allotment is approved. Please confirm.",
                 )
                 Notification.objects.create(
                     receiver=allocation.recipient.user,
                     sender=allocation.reviewed_by,  
-                    message="Organ allotment approved. Please confirm.",
+                    type = 'organ match confirmation',
+                    message=f"Hello Mr/Mrs.{allocation.recipient.user.last_name},For Your Organ request, The Organ allotment is approved. Please confirm.",
                 )
             elif data.get("action") == "reject":
                 allocation.status = "Rejected"
@@ -294,28 +300,28 @@ def approve_organ_allocation(request, allocation_id):
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 def notification(request):
-    notifications = Notification.objects.filter(user=request.user, status='unread')
+    notifications = Notification.objects.filter(receiver=request.user).order_by('-created_at')
+    print(notifications)
     return render(request, 'notification.html', {'notifications': notifications})
 
-def confirm_notification(request, notification_id):
-    notification = get_object_or_404(Notification, id=notification_id)
-    
-    if notification.user == request.user:
-        if 'donor' in request.POST:
-            notification.donor_confirmed = True
-        elif 'recipient' in request.POST:
-            notification.recipient_confirmed = True
+@login_required
+def reply_notification(request, notification_id):
+    notification = get_object_or_404(Notification, id=notification_id, receiver=request.user)
 
-        notification.save()
+    if request.method == "POST":
+        reply_text = request.POST.get("reply_text")
+        if reply_text:
+            notification.reply_message = reply_text
+            notification.save()
 
-        # Redirect to the dashboard after confirmation
-        return redirect('notification')
-    return redirect('error')
+            return JsonResponse({"success": True, "message": "Reply sent successfully!"})
+
+    return JsonResponse({"success": False, "message": "Invalid request!"})
 
 def mark_as_read(request, notification_id):
     notification = get_object_or_404(Notification, id=notification_id)
     
-    notification.status = 'read'
+    notification.is_read = True
     notification.save()
 
     return redirect('notification')
@@ -335,14 +341,63 @@ def schedule_operation(request, notification_id):
             schedule_time = make_aware(datetime.datetime.strptime(schedule_time_str, "%Y-%m-%dT%H:%M"))
 
             new_notification = Notification(
-                user=notification.user,  
+                receiver=notification.receiver,  
                 sender=request.user,  
-                message=f"Your operation has been scheduled for {schedule_time}",
-                status="unread",  
-                scheduled_time=schedule_time
+                type = 'schedule message',
+                message=f"Mr/Mrs.{notification.receiver.username}, Your operation has been scheduled for {schedule_time}",
+                is_read=False,  
             )
 
             new_notification.save() 
             return redirect("facility_schedule")
 
     return redirect("error_page")
+
+def request_new_hospital(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        address = request.POST.get("address")
+        contact = request.POST.get("contact")
+
+        if Hospital.objects.filter(name=name).exists():
+            messages.error(request, "Hospital already exists!")
+        else:
+            Hospital.objects.create(name=name, address=address, contact=contact)
+            messages.success(request, "New hospital registered successfully!")
+            return redirect("update_hospital")  # Redirect to update hospital page
+
+    return render(request, "new_hospital.html")
+
+def update_staff(request):
+    staff = request.user
+    hospitals = Hospital.objects.all()
+
+    if request.method == "POST":
+        hospital_id = request.POST.get("hospital_id")
+
+        if hospital_id:
+            staff.hospital = Staff.objects.create(user=staff,hospital_id=hospital_id)
+
+        staff.save()
+        messages.success(request, "Profile updated successfully!")
+        return redirect("update_staff")  # Redirect to the same page
+
+    return render(request, "staff_profile.html", {"staff": staff, "hospitals": hospitals})
+
+def update_doctor(request):
+    doctor = request.user  
+    hospitals = Hospital.objects.all()
+
+    if request.method == "POST":
+        specialization = request.POST.get("specialization")
+        hospital_id = request.POST.get("hospital_id")
+
+        if hospital_id:
+            Doctor.objects.create(user=doctor,hospital_id=hospital_id,specialization=specialization)
+
+        doctor.save()
+        messages.success(request, "Profile updated successfully!")
+        return redirect("update_doctor")  # Redirect to the same page
+
+    return render(request, "doctor_profile.html", {"doctor": doctor, "hospitals": hospitals})
+

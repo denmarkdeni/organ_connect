@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Dashboard</title>
+    <link rel="stylesheet" href="/static/css/notification.css">
+    
+</head>
+<body>
+
+    <h2>Reply to Notification</h2>
+
+    <p><strong>Message:</strong> {{ notification.message }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Send Reply</button>
+    </form>
+
+    <a href="{% url 'notification' %}">Back to Notifications</a>
+
+
+</body>
+</html>

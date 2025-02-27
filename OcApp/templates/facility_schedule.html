@@ -11,23 +11,25 @@
     <h1>Schedule Operation for Confirmed Donor & Recipient</h1>
 
     {% for notification in notifications %}
-        {% if notification.donor_confirmed or notification.recipient_confirmed %}
-            {% if not notification.scheduled_time %}
-                <div class="notification">
-                    <p>Confirmed Donor & Recipient: {{ notification.user.username }}</p>
+        
+        <div class="notification">
+            <p class="not-head"><strong>Message to {{ notification.receiver.userinfo.userRole }}: {{ notification.receiver.username }}</strong></p>
+            <p class="not-time"> {{ notification.created_at }} </p>
+            {% if notification.reply_message %}
+                <p>{{ notification.receiver.username }}'s Replied for {{ notification.type }}  : {{ notification.reply_message }}</p>
+                {% if notification.type == 'organ match confirmation' %}
                     <form method="post" action="{% url 'schedule_operation' notification.id %}">
                         {% csrf_token %}
-                        <label for="schedule_time">Select Date & Time:</label>
+                        <label for="schedule_time">Schedule Date & Time:</label>
                         <input type="datetime-local" name="schedule_time" required>
                         <button type="submit">Send Schedule</button>
                     </form>
-                </div>
+                {% endif %}
+            {% else %}
+                <p>No Reply</p>
             {% endif %}
-        {% elif notification.scheduled_time %}
-            <div class="notification">
-                <p>Scheduled for: {{ notification.scheduled_time }}</p>
-            </div>
-        {% endif %}
+        </div>
+       
     {% endfor %}
 
 </body>
