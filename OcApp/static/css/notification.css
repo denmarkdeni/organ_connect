@@ -15,7 +15,7 @@ body{
     margin: 0;
 }
 .notification a {
-    color: #007bff;
+    color: #ccff0c;
     text-decoration: none;
     font-size: 14px;
 }
@@ -47,5 +47,6 @@ body{
 .notification .not-time{
     font-size:20px;
     position: absolute;
-    left: 65%;
+    right: 3%;
+    top: 15px;
 }

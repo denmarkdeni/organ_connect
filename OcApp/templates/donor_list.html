@@ -5,11 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donor List & Organ Upload</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid black; padding: 10px; text-align: left; }
-        th { background-color: #f4f4f4; }
-        form { margin-top: 10px; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffebee;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h2 {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(211, 47, 47, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ffcdd2;
+            padding: 12px 15px;
+            text-align: left;
+            animation: fadeIn 1.2s ease-out;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        th:hover, td:hover {
+            background-color: #ffcdd2;
+            color: #d32f2f;
+            cursor: pointer;
+        }
+        th {
+            background-color: #d32f2f;
+            color: white;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #ffebee;
+        }
+        form {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+        select {
+            padding: 8px 12px;
+            border: 1px solid #ffcdd2;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 14px;
+            animation: fadeIn 1.4s ease-out;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        select:focus {
+            border-color: #d32f2f;
+            box-shadow: 0 0 5px rgba(211, 47, 47, 0.5);
+        }
+        button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            animation: fadeIn 1.6s ease-out;
+        }
+        button:hover {
+            background-color: #b71c1c;
+        }
+        select[name="status"] {
+            background-color: #ffcdd2;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -37,7 +120,8 @@
                 <td>{{ donor.organs }}</td>
                 <td>{{ donor.is_available }}</td>
                 <td>
-                    <form id="organForm-{{ donor.id }}" onsubmit="uploadOrgan(event, {{ donor.id }})">
+                    <form id="organForm-{{ donor.id }}">
+                        {% csrf_token %}
                         <select name="organ_name" required>
                             <option value="">Select Organ</option>
                             <option value="Heart">Heart</option>
@@ -48,16 +132,14 @@
                             <option value="Intestines">Intestines</option>
                             <option value="Cornea">Cornea</option>
                         </select>
-                    
                         <select name="status" required>
                             <option value="Available">Available</option>
                             <option value="Pending">Pending</option>
                             <option value="Transplanted">Transplanted</option>
                         </select>
-                    
                         <input type="hidden" name="donor_id" value="{{ donor.id }}">
-                        <button type="submit">Upload</button>
-                    </form>                    
+                        <button type="submit" onclick="uploadOrgan(event, {{ donor.id }})">Upload</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
@@ -68,20 +150,29 @@
         function uploadOrgan(event, donorId) {
             event.preventDefault();
 
-            let form = document.getElementById(`organForm-${donorId}`);
-            let formData = new FormData(form);
+            const form = document.getElementById(`organForm-${donorId}`);
+            const formData = new FormData(form);
 
             fetch("{% url 'upload_organ' %}", {
                 method: "POST",
                 body: formData,
-                headers: { "X-CSRFToken": "{{ csrf_token }}" }
+                headers: { "X-CSRFToken": formData.get('csrfmiddlewaretoken') }
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
-                alert(data.message || data.error );
+                alert(data.message || data.error);
+                if (data.success) {
+                    location.reload();
+                }
             })
             .catch(error => {
                 console.error("Error:", error);
+                alert("An error occurred. Please try again.");
             });
         }
     </script>

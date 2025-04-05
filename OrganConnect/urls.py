@@ -23,15 +23,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("chatbot/", include("chatbot.urls")),
     path('',views.index,name='index'),
-    path('register/',views.register,name='register'),
-    path('login/',views.login,name='login'),
+    path('login-register/',views.login_register,name='login_register'),
+    path('logout/',views.log_out,name='log_out'),
+
     path('admin_dash/',views.admin_dash,name='admin_dash'),
     path('doctor_dash/',views.doctor_dash,name='doctor_dash'),
     path('donor_dash/',views.donor_dash,name='donor_dash'),
     path('recipient_dash/',views.recipient_dash,name='recipient_dash'),
     path('facility_dash/',views.facility_dash,name='facility_dash'),
-    path('logout/',views.log_out,name='log_out'),
+    
     path('users/',views.manage_users,name='manage_users'),
+    path('remove_user/<user_id>/',views.remove_user,name='remove_user'),
     path('donor_console/',views.donor_console,name='donor_console'),
     path('save_donor/',views.save_donor,name='save_donor'),
     path('organ_request/',views.organ_request,name='organ_request'),
@@ -52,4 +54,6 @@ urlpatterns = [
     path('update_staff/', views.update_staff, name='update_staff'),
     path('update_doctor/', views.update_doctor, name='update_doctor'),
     path('new_hospital/', views.request_new_hospital, name='new_hospital'),
+    path('hospitals/', views.hospital_verification, name='hospital_verification'),
+    path('hospitals/verify/<int:hospital_id>/', views.verify_hospital, name='verify_hospital'),
 ]

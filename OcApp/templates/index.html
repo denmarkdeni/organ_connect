@@ -8,7 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Medic Care Bootstrap 5 CSS Template</title>
+        <title>ORGAN connect</title>
 
         <!-- CSS FILES -->        
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
 
         <link href="{% static 'assets/css/bootstrap-icons.css'%}" rel="stylesheet">
 
-        <link href="{% static 'assets/css/owl.carousel.min.css'%}'%}" rel="stylesheet">
+        <link href="{% static 'assets/css/owl.carousel.min.css'%}" rel="stylesheet">
 
         <link href="{% static 'assets/css/owl.theme.default.min.css'%}" rel="stylesheet">
 
@@ -35,447 +35,1867 @@ https://templatemo.com/tm-566-medic-care
 -->
     </head>
     
-    <body id="top">
+    <body id="top" style="background:melon">
     
         <main>
 
-            <nav class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
-                <div class="container">
-                    <a class="navbar-brand mx-auto d-lg-none" href="index.html">
-                        Medic Care
-                        <strong class="d-block">Health Specialist</strong>
+            {% load static %}  <!-- Load static files for Django -->
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg fixed-top glass-navbar">
+                <div class="container d-flex justify-content-between align-items-center">
+                    <!-- Left Navigation -->
+                    <ul class="navbar-nav d-flex flex-row me-auto">
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#hero">Home</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#stepsofdonation">Donation Steps</a></li>
+                    </ul>
+            
+                    <!-- Centered Brand Logo -->
+                    <a class="navbar-brand text-dark fw-bold fade-in-up mx-auto text-center" href="/login-register">
+                        ORGAN CONNECT
+                        <strong class="d-block text-muted small-text">Care Each Other</strong>
                     </a>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mx-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#hero">Home</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#about">About</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/chatbot">Timeline</a>
-                            </li>
-
-                            <a class="navbar-brand d-none d-lg-block" href="index.html">
-                                Medic Care
-                                <strong class="d-block">Health Specialist</strong>
-                            </a>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#reviews">Testimonials</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{%  url 'register' %}" >Register</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="#contact">Contact</a>
-                            </li>
+            
+                    <!-- Right Navigation & Account Icon -->
+                    <ul class="navbar-nav d-flex flex-row ms-auto">
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#reviews">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#booking">Booking</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#contact">Contact</a></li>
+                    </ul>
+            
+                    <!-- Account Dropdown -->
+                    <div class="dropdown ms-3">
+                        <a href="#" class="nav-link text-dark account-icon" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle fa-lg"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end animated-dropdown" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                         </ul>
                     </div>
-
                 </div>
             </nav>
+            
+            <style>
+                /* Modern Navbar Styling */
+                .glass-navbar {
+                    background: rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(6px);
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    transition: all 0.3s ease-in-out;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                    padding: 10px 0; /* Balanced padding */
+                    min-height: 60px; /* Slightly taller for better spacing */
+                }
+            
+                /* Navbar Scroll Effect */
+                .glass-navbar.scrolled {
+                    background: rgba(255, 255, 255, 0.8);
+                    backdrop-filter: blur(12px);
+                    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+                }
+            
+                /* Navbar Text & Spacing */
+                .navbar-nav {
+                    gap: 20px; /* Increased spacing between nav items */
+                }
+            
+                .navbar-nav .nav-link {
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: black;
+                    padding: 10px 12px; /* Increased spacing */
+                    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+                }
+            
+                /* Hover Effect */
+                .navbar-nav .nav-link:hover {
+                    color: #007bff;
+                    transform: scale(1.1);
+                }
+            
+                /* Active Link */
+                .navbar-nav .nav-link.active {
+                    color: #007bff;
+                    font-weight: bold;
+                }
+            
+                /* Brand */
+                .navbar-brand {
+                    font-size: 20px; /* Increased size */
+                    letter-spacing: 1px;
+                }
+            
+                .small-text {
+                    font-size: 12px; /* Better visibility */
+                }
+            
+                /* Account Icon */
+                .account-icon {
+                    font-size: 20px;
+                }
+            
+                /* Dropdown Animation */
+                .animated-dropdown {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                    transition: all 0.3s ease-in-out;
+                    display: none;
+                }
+            
+                .dropdown:hover .animated-dropdown {
+                    opacity: 1;
+                    transform: translateY(0);
+                    display: block;
+                }
+            
+                /* Responsive Fixes */
+                @media (max-width: 992px) {
+                    .navbar-brand {
+                        font-size: 18px;
+                    }
+            
+                    .navbar-nav {
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                }
+            </style>
+            
+            <script>
+                // Navbar Background Change on Scroll
+                window.addEventListener('scroll', function () {
+                    const navbar = document.querySelector('.glass-navbar');
+                    if (window.scrollY > 50) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                });
+            
+                // Smooth Scrolling Effect for Navbar Links
+                document.querySelectorAll('.scroll-link').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 60,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+            
+                // Dropdown Animation for Account Menu
+                document.getElementById('accountDropdown').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const dropdownMenu = document.querySelector('.animated-dropdown');
+                    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                });
+            
+                // Hide Dropdown Menu When Clicking Outside
+                document.addEventListener('click', function (event) {
+                    const dropdownMenu = document.querySelector('.animated-dropdown');
+                    const accountIcon = document.getElementById('accountDropdown');
+            
+                    if (!accountIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.style.display = 'none';
+                    }
+                });
+            </script>
+            
 
-            <section class="hero" id="hero">
-                <div class="container">
-                    <div class="row">
 
-                        <div class="col-12">
-                            <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="{% static 'assets/images/slider/portrait-successful-mid-adult-doctor-with-crossed-arms.jpg'%}" class="img-fluid" alt="">
-                                    </div>
+<!-- JavaScript to Ensure Video Loads -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var video = document.getElementById("bgVideo");
+        
+        video.oncanplaythrough = function () {
+            video.play().catch(error => console.log("Autoplay prevented:", error));
+        };
+        
+        video.onerror = function () {
+            console.error("Error loading video. Check the file path or format.");
+        };
+    });
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video with Content Below</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
 
-                                    <div class="carousel-item">
-                                        <img src="{% static 'assets/images/slider/young-asian-female-dentist-white-coat-posing-clinic-equipment.jpg'%}" class="img-fluid" alt="">
-                                    </div>
+        .video-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
 
-                                    <div class="carousel-item">
-                                        <img src="{% static 'assets/images/slider/doctor-s-hand-holding-stethoscope-closeup.jpg'%}" class="img-fluid" alt="">
-                                    </div>
-                                </div>
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Add this to remove extra space */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<script>
+    // Debugging Script
+    document.addEventListener('DOMContentLoaded', function() as any {
+        var videoSource = document.getElementById('videoSource');
+        if (videoSource) {
+            console.log('Video source:', videoSource.src); // Log the video source
+        } else {
+            console.error('Video source element not found.');
+        }
+
+        var myVideo = document.querySelector('video');
+        if(myVideo){
+            myVideo.addEventListener('error', function(e) {
+                console.error('Video error:', e, myVideo.error);
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammu - Girl Bot Icon Chat</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+        }
+
+        .ChatContainer {
+            width: 400px;
+            height: 500px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            background: url('your-background-image.jpg') no-repeat center center;
+            background-size: cover;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ChatContainer.Show {
+            display: flex;
+        }
+
+        .ChatHeader {
+            background-color: rgba(25, 118, 210, 0.8);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ChatMessages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .Message {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+            backdrop-filter: blur(5px);
+        }
+
+        .UserMessage {
+            background-color: rgba(187, 222, 251, 0.8);
+            align-self: flex-end;
+            color: #1a237e;
+        }
+
+        .BotMessage {
+            background-color: rgba(224, 247, 250, 0.8);
+            align-self: flex-start;
+            color: #333;
+        }
+
+        .UserInputContainer {
+            padding: 10px;
+            border-top: 1px solid rgba(221, 221, 221, 0.5);
+            display: flex;
+            background-color: rgba(245, 245, 245, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .UserInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .SendButton {
+            background-color: rgba(25, 118, 210, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            backdrop-filter: blur(5px);
+        }
+
+        .SendButton:hover {
+            background-color: rgba(21, 101, 192, 0.8);
+        }
+
+        .ChatIcon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .ChatIcon img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .ChatIcon img:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="ChatIcon">
+        <img src="/static/images/chatboticon.jpg" alt="Ammu Bot Icon">
+    </div>
+    <div class="ChatContainer">
+        <div class="ChatHeader">
+            🤖...Ammu
+        </div>
+        <div id="chatMessages" class="ChatMessages"></div>
+        <div class="UserInputContainer">
+            <input type="text" id="userInput" class="UserInput" placeholder="Type your message...">
+            <button id="sendButton" class="SendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const chatContainer = document.querySelector('.ChatContainer');
+        const chatIcon = document.querySelector('.ChatIcon');
+
+        chatIcon.addEventListener('click', () => {
+            chatContainer.classList.toggle('Show');
+            userInput.focus();
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = userInput.value.trim().toLowerCase();
+            if (!userMessage) return;
+
+            addMessage(userMessage, 'UserMessage');
+            userInput.value = '';
+
+            fetch("/chatbot/chat/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                botMessage(data.message,'BotMessage')
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function addMessage(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('Message', className);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function botMessage(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('Message', className);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function getBotResponse(userMessage) {
+    const responses = {
+        "hello": "Hello there! How can I assist you today?",
+        "hi": "Hi! How’s your day going?",
+        "how are you": "I'm doing great! Thanks for asking.",
+        "good morning": "Good morning! Hope you have a wonderful day.",
+        "good night": "Good night! Sweet dreams.",
+        "i am happy": "That's awesome! Keep smiling. 😊",
+        "i am sad": "Oh no! I'm here if you want to talk. 💙",
+        "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field! 😂",
+        "who is your creator": "I was created by a cool developer who loves coding!",
+        
+        // Organ Donation Related
+        "what is organ donation": "Organ donation is the process of giving an organ to save someone’s life.",
+        "who can donate organs": "Almost anyone! Doctors assess eligibility at the time of donation.",
+        "what organs can be donated": "Organs that can be donated include kidneys, liver, heart, lungs, pancreas, and intestines.",
+        "how does organ donation work": "It involves a medical professional surgically removing a healthy organ from a donor and transplanting it into a recipient.",
+        "is organ donation safe": "Yes, it's generally safe. Donors undergo thorough medical evaluations to ensure their health isn't compromised.",
+        
+        // New Topics Added
+        "what is your name": "I'm your friendly chatbot!",
+        "what can you do": "I can answer questions, tell jokes, and chat with you!",
+        "what is AI": "AI stands for Artificial Intelligence, which enables machines to mimic human-like thinking.",
+        "how does AI work": "AI uses algorithms and data to make decisions and perform tasks like humans.",
+        "what is the capital of France": "The capital of France is Paris.",
+        "who is the president of the USA": "That depends on the current time! You can check the latest updates online.",
+        "what's the weather like": "I can’t check the weather, but you can use a weather app for the latest updates!",
+        "do you like humans": "Of course! I exist to help and chat with you.",
+        "can you sing": "I wish I could, but I can tell you song lyrics!",
+        "what is the meaning of life": "The meaning of life is different for everyone. What do you think?",
+        "do you have feelings": "Not exactly, but I can understand emotions and try to make you smile!",
+        "how old are you": "I'm as old as my code! Always learning and evolving.",
+        "where do you live": "I live in the cloud, floating through the internet!",
+        "who is the smartest person": "Many people are incredibly smart! Einstein, Newton, and modern scientists all contribute to knowledge.",
+        "what's your favorite color": "I like all colors, but blue is quite calming!",
+        
+        // Fun Responses
+        "do you like pizza": "Who doesn't love pizza? 🍕",
+        "cats or dogs": "I love both! Cats are independent, and dogs are loyal. Which do you prefer?",
+        "tell me a fun fact": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are still edible!",
+        "do you sleep": "I don’t need sleep, but I do like resting between conversations!",
+        "are you real": "I'm as real as the internet! But I don’t have a physical form.",
+        
+        "default": "Hmm... I don't understand that yet. Can you ask me something else?"
+    };
+
+    let message = responses[userMessage.toLowerCase()] || responses["default"];
+    botMessage(message,'BotMessage')
+}
+
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video with Content Below</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Add this to remove extra space */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="video-container" id="hero">
+    <video autoplay loop muted playbackRate="0.5">
+        <source id="videoSource" src="static/assets/video/webhp3333.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<script>
+    // Debugging Script
+    document.addEventListener('DOMContentLoaded', function() {
+        var videoSource = document.getElementById('videoSource');
+        if (videoSource) {
+            console.log('Video source:', videoSource.src); // Log the video source
+        } else {
+            console.error('Video source element not found.');
+        }
+
+        var myVideo = document.querySelector('video');
+        if(myVideo){
+            myVideo.addEventListener('error', function(e) {
+                console.error('Video error:', e, myVideo.error);
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>
+            {% load static %}
+<section id="stepsofdonation" style="padding: 60px 0; background: linear-gradient(135deg, #e3f2fd, #ffffff);">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 50px; font-size: 36px; font-weight: bold; color: #000000; animation: fadeInDown 1.5s ease-in-out;">
+            STEPS OF DONATION
+        </h2>
+
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <!-- Step 1 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Identification of a Potential Donor</h3>
+                    <p>A patient is declared brain dead or experiences circulatory death, meeting the criteria for organ donation.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Evaluation and Consent</h3>
+                    <p>Doctors assess organ viability and obtain consent from the donor’s family or prior registration.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Medical Maintenance of Donor</h3>
+                    <p>The donor's body is maintained on life support to ensure organ viability until retrieval.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Organ Recovery</h3>
+                    <p>Surgeons carefully retrieve organs in a controlled medical environment to ensure their viability.</p>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Organ Transportation</h3>
+                    <p>The organs are rapidly transported to transplant centers using specialized preservation techniques.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Transplant Surgery</h3>
+                    <p>The recipient undergoes transplant surgery, followed by careful post-operative monitoring.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Timeline Container */
+    .timeline-container {
+        position: relative;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Vertical Line */
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: #007bff;
+        transform: translateX(-50%);
+    }
+
+    /* Timeline Item */
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 50px;
+        width: 100%;
+        opacity: 0;  /* Initially hidden for animation */
+        transform: scale(0.8); /* Initially smaller */
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    /* Pop Effect */
+    .timeline-item.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Left & Right Positioning */
+    .timeline-item.left {
+        flex-direction: row-reverse;
+    }
+
+    .timeline-item.right {
+        flex-direction: row;
+    }
+
+    /* Blue Dot */
+    .circle {
+        width: 20px;
+        height: 20px;
+        background: #007bff;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        border: 4px solid white;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Content Box with Pop Effect */
+    .content {
+        background: white;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        width: 40%;
+        text-align: center;
+        transition: transform 0.4s ease-out;
+    }
+
+    /* Heading Alignment */
+    .content h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff;
+        text-align: center;
+    }
+
+    /* Responsive Fix */
+    @media (max-width: 768px) {
+        .timeline-item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .timeline-item.left .content, 
+        .timeline-item.right .content {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+</style>
+
+<script>
+    // Scroll Animation for Steps
+    document.addEventListener("DOMContentLoaded", function () {
+        let timelineItems = document.querySelectorAll(".timeline-item");
+
+        function revealOnScroll() {
+            timelineItems.forEach((item) => {
+                let itemTop = item.getBoundingClientRect().top;
+                if (itemTop < window.innerHeight - 100) {
+                    item.classList.add("visible");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+    });
+</script>
+
+            
+         <!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<section class="section-padding" id="booking">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-12 mx-auto">
+                <div class="booking-form" id="booking-form">
+                    <h2 class="text-center mb-lg-4 mb-3">Book an Appointment</h2>
+
+                    <form id="form" role="form" action="#booking" method="post">
+                        <div class="row">
+                            <div class="col-lg-6 col-12">
+                                <input type="text" name="name" id="name" class="form-control" placeholder="Full Name" required>
                             </div>
 
-                            <div class="heroText d-flex flex-column justify-content-center">
+                            <div class="col-lg-6 col-12">
+                                <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email Address" required>
+                            </div>
 
-                                <h1 class="mt-auto mb-2">
-                                    Better
-                                    <div class="animated-info">
-                                        <span class="animated-item">health</span>
-                                        <span class="animated-item">days</span>
-                                        <span class="animated-item">lives</span>
-                                    </div>
-                                </h1>
+                            <div class="col-lg-6 col-12">
+                                <input type="tel" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" placeholder="Phone: 123-456-7890" required>
+                            </div>
 
-                                <p class="mb-4">Medic Care is a Bootstrap 5 Template provided by TemplateMo website. Credits go to FreePik and RawPixel for images used in this template.</p>
+                            <div class="col-lg-6 col-12">
+                                <input type="date" name="date" id="date" class="form-control" required>
+                            </div>
 
-                                <div class="heroLinks d-flex flex-wrap align-items-center">
-                                    <a class="custom-link me-4" href="#about" data-hover="Learn More">Learn More</a>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="6" id="message" name="message" placeholder="Additional Message"></textarea>
+                            </div>
 
-                                    <p class="contact-phone mb-0"><i class="bi-phone"></i> 010-020-0340</p>
-                                </div>
+                            <div class="col-lg-3 col-md-4 col-6 mx-auto">
+                                <button type="submit" class="form-control btn-submit" id="submit-button">Book Now</button>
                             </div>
                         </div>
+                    </form>
 
+                    <!-- Success or Error Message Display -->
+                    <div id="response-message" style="display:none;" class="alert">
+                        <p id="response-text"></p>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <section class="section-padding" id="about">
-                <div class="container">
-                    <div class="row">
+<!-- JavaScript -->
+<script>
+    // Get form elements
+    const form = document.getElementById("form");
+    const responseMessage = document.getElementById("response-message");
+    const responseText = document.getElementById("response-text");
 
-                        <div class="col-lg-6 col-md-6 col-12">
-                            <h2 class="mb-lg-3 mb-3">Meet Dr. Carson</h2>
+    // Listen for form submission
+    form.addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent the form from submitting immediately
 
-                            <p>Protect yourself and others by wearing masks and washing hands frequently. Outdoor is safer than indoor for gatherings or holding events. People who get sick with Coronavirus disease (COVID-19) will experience mild to moderate symptoms and recover without special treatments.</p>
+        // Get form field values
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const date = document.getElementById("date").value;
+        const message = document.getElementById("message").value;
 
-                            <p>You can feel free to use this CSS template for your medical profession or health care related websites. You can <a rel="nofollow" href="http://paypal.me/templatemo" target="_blank">support us a little</a> via PayPal if this template is good and useful for your work.</p>
-                        </div>
+        // Simple client-side validation
+        if (name && email && phone && date) {
+            // Simulate a successful form submission (can replace with actual AJAX call)
+            displayMessage("Your appointment has been booked successfully!", "success");
+            form.reset(); // Reset form fields
+        } else {
+            displayMessage("Please fill in all required fields.", "error");
+        }
+    });
 
-                        <div class="col-lg-4 col-md-5 col-12 mx-auto">
-                            <div class="featured-circle bg-white shadow-lg d-flex justify-content-center align-items-center">
-                                <p class="featured-text"><span class="featured-number">12</span> Years<br> of Experiences</p>
-                            </div>
-                        </div>
+    // Function to display success or error messages
+    function displayMessage(message, type) {
+        // Display response message
+        responseMessage.style.display = "block";
+        responseText.textContent = message;
+        responseMessage.className = `alert alert-${type}`; // Set the alert type (success/error)
+    }
 
-                    </div>
+    // Function to apply paper texture background with blur effect
+    function applyPaperTextureWithBlur() {
+        const body = document.body;
+        const backgroundElement = document.createElement('div');
+        backgroundElement.style.position = 'fixed';
+        backgroundElement.style.top = '0';
+        backgroundElement.style.left = '0';
+        backgroundElement.style.width = '100vw';
+        backgroundElement.style.height = '100vh';
+        backgroundElement.style.backgroundImage = "url('https://www.transparenttextures.com/patterns/paper-1.png')";
+        backgroundElement.style.backgroundSize = "cover";
+        backgroundElement.style.backgroundPosition = "center";
+        backgroundElement.style.backgroundAttachment = "fixed";
+        backgroundElement.style.filter = "blur(8px)"; // Apply blur effect to the background
+        backgroundElement.style.zIndex = "-1"; // Ensure the background is behind the content
+
+        body.appendChild(backgroundElement);
+    }
+
+    // Call function to apply paper texture with blur effect to the background
+    applyPaperTextureWithBlur();
+</script>
+
+<!-- CSS for Alerts -->
+<style>
+    .alert {
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    .alert-success {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .alert-error {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .alert p {
+        margin: 0;
+    }
+
+    /* Carved effect on the form */
+    .booking-form {
+        transition: background 1s ease, transform 0.5s ease-in-out;
+        background: white; /* Set the background color to white */
+        padding: 30px;
+        border-radius: 20px; /* Inward-rounded corners for a carved look */
+        box-shadow: inset 0px 0px 20px rgba(0, 0, 0, 0.1); /* Inset shadow for the carved effect */
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 20px;
+        font-size: 18px;
+        margin: 15px 0;
+    }
+
+    .btn-submit {
+        background-color: #00c6ff;
+        border: none;
+        color: white;
+        font-size: 22px;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #0072ff;
+    }
+
+    /* Responsive Design for Larger Screens */
+    @media (max-width: 1200px) {
+        .container {
+            max-width: 95%;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .container {
+            max-width: 90%;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            max-width: 85%;
+        }
+    }
+
+    /* Remove unwanted boxes */
+    .booking-form,
+    .alert {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
+<!-- CSS Styling -->
+<style>
+    /* Apply New Font */
+    * {
+        font-family: 'Poppins', sans-serif;
+        color: black;
+    }
+
+    /* Paper Texture Background */
+    #booking {
+        background: url('https://www.transparenttextures.com/patterns/aged-paper.png'), 
+                    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.7));
+        backdrop-filter: blur(15px);
+        padding: 80px 0;
+        position: relative;
+    }
+
+    /* Glass Effect for the Form */
+    .booking-form {
+        background: rgba(255, 255, 255, 0.5);
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .booking-form:hover {
+        transform: scale(1.015);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Form Inputs */
+    .form-control {
+        background: rgba(255, 255, 255, 0.85);
+        border: none;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.4s ease-in-out;
+    }
+
+    /* Selection Animation */
+    .form-control:focus {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+        outline: none;
+        transform: scale(1.02);
+    }
+
+    /* Submit Button */
+    .btn-submit {
+        background: linear-gradient(90deg, rgba(0, 123, 255, 0.9), rgba(0, 89, 255, 0.7));
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+    }
+
+    .btn-submit:hover {
+        background: linear-gradient(90deg, rgba(0, 89, 255, 1), rgba(0, 60, 200, 0.9));
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+    }
+
+    /* Button Selection Animation */
+    .btn-submit:focus {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 123, 255, 0.6);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .booking-form {
+            padding: 20px;
+        }
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation Reviews</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?healthcare,hospital') center/cover no-repeat;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background-blend-mode: overlay;
+            background-color: rgba(0, 82, 204, 0.5); /* Blue overlay */
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 50px 10%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #0052cc;
+        }
+
+        /* Testimonials */
+        .testimonial-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 20px;
+            width: 30%;
+            min-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-in-out;
+            border-left: 5px solid #0052cc; /* Blue accent */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #0052cc;
+        }
+
+        .testimonial-content {
+            text-align: left;
+        }
+
+        .testimonial-card p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-card h3 {
+            color: #0052cc; /* Blue text */
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 5%;
+            }
+
+            .testimonial-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .testimonial-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>   
+        <section id="about">
+            <!-- about content goes here -->
+        </section>     
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Organ Donation</title>
+        <style>
+            /* Global Styles */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Arial', sans-serif;
+                background-color: #e3f2fd;
+                color: #333;
+                text-align: center;
+                overflow-x: hidden;
+            }
+    
+            /* Header */
+            header {
+                padding: 50px 20px;
+                animation: fadeIn 1.5s ease-in-out;
+            }
+    
+            h1 {
+                font-size: 45px;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #64b5f6;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                animation: zoomIn 1.5s ease-in-out;
+            }
+    
+            p {
+                font-size: 20px;
+                max-width: 900px;
+                margin: 0 auto;
+                color: #444;
+            }
+    
+            /* Importance Section */
+            .importance-section {
+                background: white;
+                padding: 50px 20px;
+                max-width: 1000px;
+                margin: 40px auto;
+                border-radius: 15px;
+                box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+                animation: fadeIn 2s ease-in-out;
+            }
+    
+            .importance-section h2 {
+                font-size: 30px;
+                color: #64b5f6;
+                margin-bottom: 15px;
+            }
+    
+            .importance-section p {
+                font-size: 18px;
+                line-height: 1.8;
+            }
+    
+            /* Organ Sections */
+            .organ-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+                padding: 40px 20px;
+                justify-content: center;
+                max-width: 1200px;
+                margin: auto;
+            }
+    
+            .organ-box {
+                position: relative;
+                width: 100%;
+                max-width: 250px;
+                height: 220px;
+                margin: 0 auto;
+                perspective: 1000px;
+            }
+    
+            .organ {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transition: transform 0.6s ease-in-out;
+            }
+    
+            .organ-box:hover .organ {
+                transform: rotateY(180deg);
+            }
+    
+            .organ-front,
+            .organ-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                font-weight: bold;
+                flex-direction: column;
+            }
+    
+            .organ-front {
+                background: white;
+                color: #64b5f6;
+            }
+    
+            .organ-back {
+                background: #64b5f6;
+                color: white;
+                transform: rotateY(180deg);
+                font-size: 18px;
+                text-align: center;
+                padding: 20px;
+                line-height: 1.6;
+            }
+    
+            /* Footer */
+            footer {
+                padding: 20px;
+                background: #64b5f6;
+                color: white;
+                margin-top: 40px;
+            }
+    
+            /* Keyframe Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+    
+            @keyframes zoomIn {
+                from { transform: scale(0.8); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 900px) {
+                .organ-container {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+    
+            @media (max-width: 600px) {
+                .organ-container {
+                    grid-template-columns: repeat(1, 1fr);
+                }
+            }
+        </style>
+    </head>
+    <body>
+    
+        <!-- Header -->
+        <header>
+            <h1>About Organ Donation</h1>
+            <p>Saving Lives Through Generosity</p>
+        </header>
+    
+        <!-- Importance Section -->
+        <section class="importance-section">
+            <h2>Why Organ Donation is Important</h2>
+            <p>
+                Organ donation is a selfless act that has the power to save and transform lives. Thousands of people wait for transplants every year,
+                but the shortage of donors means many don’t survive. Just one donor can save up to 8 lives and improve many more through tissue donation.
+                By choosing to be a donor, you provide hope and a second chance to those in need.
+            </p>
+        </section>
+    
+        <!-- Organ Sections -->
+        <div class="organ-container">
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">❤️ <h2>Heart</h2></div>
+                    <div class="organ-back"><p>Pumps blood and oxygen throughout the body. A heart transplant can save lives.</p></div>
                 </div>
-            </section>
-
-            <section class="gallery">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-lg-6 col-6 ps-0">
-                            <img src="{% static 'assets/images/gallery/medium-shot-man-getting-vaccine.jpg'%}" class="img-fluid galleryImage" alt="get a vaccine" title="get a vaccine for yourself">
-                        </div>
-
-                        <div class="col-lg-6 col-6 pe-0">
-                            <img src="{% static 'assets/images/gallery/female-doctor-with-presenting-hand-gesture.jpg'%}" class="img-fluid galleryImage" alt="wear a mask" title="wear a mask to protect yourself">
-                        </div>
-
-                    </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🫁 <h2>Lungs</h2></div>
+                    <div class="organ-back"><p>Responsible for breathing. Lung transplants help people with severe lung diseases.</p></div>
                 </div>
-            </section>
-
-            <section class="section-padding pb-0" id="timeline">
-                <div class="container">
-                    <div class="row">
-
-                        <h2 class="text-center mb-lg-5 mb-4">Our Timeline</h2>
-                        
-                        <div class="timeline">
-                            <div class="row g-0 justify-content-end justify-content-md-around align-items-start timeline-nodes">
-                                <div class="col-9 col-md-5 me-md-4 me-lg-0 order-3 order-md-1 timeline-content bg-white shadow-lg">
-                                    <h3 class=" text-light">Get the vaccine</h3>
-
-                                    <p>Donec facilisis urna dui, a dignissim mauris pretium a. Quisque quis libero fermentum, tempus felis eu, consequat nibh.</p>
-                                </div>
-
-                                <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                    <i class="bi-patch-check-fill timeline-icon"></i>
-                                </div>
-
-                                <div class="col-9 col-md-5 ps-md-3 ps-lg-0 order-1 order-md-3 py-4 timeline-date">
-                                    <time>2021-07-31 Saturday</time>
-                                </div>
-                            </div>
-
-                            <div class="row g-0 justify-content-end justify-content-md-around align-items-start timeline-nodes my-lg-5 my-4">
-                                <div class="col-9 col-md-5 ms-md-4 ms-lg-0 order-3 order-md-1 timeline-content bg-white shadow-lg">
-                                    <h3 class=" text-light">Consulting your health</h3>
-
-                                    <p>You are fully permitted to use this template for your commercial or personal website. You are not permitted to redistribute the template ZIP file for a download purpose on any other <a href="https://www.google.com/search?q=free+css" target="_blank">Free CSS collection</a> website.</p>
-                                </div>
-
-                                <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                    <i class="bi-book timeline-icon"></i>
-                                </div>
-
-                                <div class="col-9 col-md-5 pe-md-3 pe-lg-0 order-1 order-md-3 py-4 timeline-date">
-                                    <time>2021-07-15 Thursday</time>
-                                </div>
-                            </div>
-
-                            <div class="row g-0 justify-content-end justify-content-md-around align-items-start timeline-nodes">
-                                <div class="col-9 col-md-5 me-md-4 me-lg-0 order-3 order-md-1 timeline-content bg-white shadow-lg">
-                                    <h3 class=" text-light">Certified Nurses</h3>
-
-                                    <p>Phasellus eleifend, urna interdum congue viverra, arcu neque ultrices ligula, id pulvinar nisi nibh et lacus. Vivamus gravida, ipsum non euismod tincidunt, sapien elit fermentum mi, quis iaculis enim ligula at arcu.</p>
-                                </div>
-
-                                <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                    <i class="bi-file-medical timeline-icon"></i>
-                                </div>
-
-                                <div class="col-9 col-md-5 ps-md-3 ps-lg-0 order-1 order-md-3 py-4 timeline-date">
-                                    <time>2021-06-28 Monday</time>
-                                </div>
-                            </div>
-
-                            <div class="row g-0 justify-content-end justify-content-md-around align-items-start timeline-nodes my-lg-5 my-4">
-                                <div class="col-9 col-md-5 ms-md-4 ms-lg-0 order-3 order-md-1 timeline-content bg-white shadow-lg">
-                                    <h3 class=" text-light">Covid-19 Hospitals</h3>
-
-                                    <p class="mb-0 pb-0">Fusce vestibulum euismod nulla sed ultrices. Praesent rutrum nulla vel sapien euismod, quis tempus dui placerat.</p>
-                                    
-                                    <p>Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla</p>
-                                </div>
-
-                                <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                    <i class="bi-globe timeline-icon"></i>
-                                </div>
-
-                                <div class="col-9 col-md-5 pe-md-3 pe-lg-0 order-1 order-md-3 py-4 timeline-date">
-                                    <time>2021-05-30 Sunday</time>
-                                </div>
-                            </div>
-
-                            <div class="row g-0 justify-content-end justify-content-md-around align-items-start timeline-nodes">
-                                <div class="col-9 col-md-5 me-md-4 me-lg-0 order-3 order-md-1 timeline-content bg-white shadow-lg">
-                                    <h3 class=" text-light">Freelance Nursing</h3>
-
-                                    <p>If you need a working contact form that submits email to your inbox, please <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">visit our contact page</a> for more information.</p>
-                                </div>
-
-                                <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                    <i class="bi-person timeline-icon"></i>
-                                </div>
-
-                                <div class="col-9 col-md-5 ps-md-3 ps-lg-0 order-1 order-md-3 py-4 timeline-date">
-                                    <time>2021-05-18 Tuesday</time>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🩸 <h2>Kidneys</h2></div>
+                    <div class="organ-back"><p>Filter waste from blood. Kidney transplants remove the need for dialysis.</p></div>
                 </div>
-            </section>
-
-            <section class="section-padding pb-0" id="reviews">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-12">
-                            <h2 class="text-center mb-lg-5 mb-4">Our Patients</h2>
-
-                            <div class="owl-carousel reviews-carousel">
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Best Health Care</strong></p>
-
-                                    <p class="reviews-text w-100">Phasellus ligula ante, tempus ac imperdiet ut, mattis ac nibh. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-
-                                    <img src="{% static 'assets/images/reviews/beautiful-woman-face-portrait-brown-background.jpeg'%}" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Marie</strong>
-
-                                        <span class="text-muted">Patient</span>
-                                    </figcaption>
-                                </figure>
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Doctor cares everyone!</strong></p>
-
-                                    <p class="reviews-text w-100">Donec in elementum orci, nec posuere ligula. Quisque vulputate diam et ullamcorper ullamcorper. Pellentesque vestibulum neque at leo fermentum mattis.</p>
-
-                                    <img src="images/reviews/senior-man-wearing-white-face-mask-covid-19-campaign-with-design-space.jpeg" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Ben Walker</strong>
-
-                                        <span class="text-muted">Recovered</span>
-                                    </figcaption>
-                                </figure>
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Great services!</strong></p>
-
-                                    <p class="reviews-text w-100">Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec sit amet velit vitae purus aliquam efficitur.</p>
-
-                                    <img src="images/reviews/portrait-british-woman.jpeg" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Laura Zono</strong>
-
-                                        <span class="text-muted">New Patient</span>
-                                    </figcaption>
-                                </figure>
-
-                                <figure class="reviews-thumb d-flex flex-wrap align-items-center rounded">
-                                    <div class="reviews-stars">
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star-fill"></i>
-                                        <i class="bi-star"></i>
-                                        <i class="bi-star"></i>
-                                    </div>
-
-                                    <p class="text-primary d-block mt-2 mb-0 w-100"><strong>Best Advices</strong></p>
-
-                                    <p class="reviews-text w-100">Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Maecenas faucibus mollis interdum. Donec ullamcorper nulla non metus auctor fringilla.</p>
-
-                                    <img src="{% static 'assets/images/reviews/woman-wearing-mask-face-closeup-covid-19-green-background.jpeg'%}" class="img-fluid reviews-image" alt="">
-
-                                    <figcaption class="ms-4">
-                                        <strong>Rosey</strong>
-
-                                        <span class="text-muted">Almost Recovered</span>
-                                    </figcaption>
-                                </figure>
-                               
-                            </div>
-                        </div>
-
-                    </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🦠 <h2>Liver</h2></div>
+                    <div class="organ-back"><p>Vital for digestion & detox. It can regenerate, making living donation possible.</p></div>
                 </div>
-            </section>
-
-            <section class="section-padding" id="booking">
-                <div class="container">
-                    <div class="row">
-                    
-                        <div class="col-lg-8 col-12 mx-auto">
-                            <div class="booking-form">
-                                
-                                <h2 class="text-center mb-lg-3 mb-2">Book an appointment</h2>
-                            
-                                <form role="form" action="#booking" method="post">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required>
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email address" required>
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <input type="telephone" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" placeholder="Phone: 123-456-7890">
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <input type="date" name="date" id="date" value="" class="form-control">
-                                            
-                                        </div>
-
-                                        <div class="col-12">
-                                            <textarea class="form-control" rows="5" id="message" name="message" placeholder="Additional Message"></textarea>
-                                        </div>
-
-                                        <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                            <button type="submit" class="form-control" id="submit-button">Book Now</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
-
-                    </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🧠 <h2>Brain</h2></div>
+                    <div class="organ-back"><p>Brain donations contribute to medical research and understanding of neurological diseases.</p></div>
                 </div>
-            </section>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">👁️ <h2>Eyes</h2></div>
+                    <div class="organ-back"><p>Corneal transplants restore sight to the visually impaired.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🦴 <h2>Bone Marrow</h2></div>
+                    <div class="organ-back"><p>Helps treat leukemia and blood disorders through transplantation.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🩻 <h2>Small Intestine</h2></div>
+                    <div class="organ-back"><p>The small intestine absorbs nutrients from food. Intestinal transplants help patients with severe digestive disorders.</p></div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </body>
+    </html>
+    
+    
 
-        </main>
 
-        <footer class="site-footer section-padding" id="contact">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation</title>
+    <style>
+        /* Remove blue background */
+        .hero {
+            background-color: transparent; /* Removes blue background */
+            color: #333; /* Ensures text is visible */
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .testimonials {
+            background-color: transparent; /* Removes blue background */
+            padding: 50px 20px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation: A Gift of Life</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            animation: fadeInTitle 1.2s ease-in-out;
+        }
+
+        /* Grid Layout - 4 Columns */
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 30px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 1;
+            transform: scale(1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #ddd;
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .testimonial-card h3 {
+            font-weight: 600;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        /* Hover Effect */
+        .testimonial-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .testimonial-card img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Hidden Testimonials */
+        .hidden {
+            display: none;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        /* Buttons */
+        .toggle-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .testimonial-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .testimonial-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="testimonials">
+        <section id="reviews">
+            <!-- Reviews content goes here -->
+        </section>
+        <h2>Real Stories, Real Impact</h2>
+        <div class="testimonial-container">
+            <!-- First 4 Reviews -->
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="John M.">
+                <p>"After years of kidney failure, a transplant gave me a second chance!"</p>
+                <h3>- John M.</h3>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Sarah T.">
+                <p>"Losing my son was tough, but knowing his donation saved lives comforts me."</p>
+                <h3>- Sarah T.</h3>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/women/3.jpg" alt="Lisa W.">
+                <p>"Donating part of my liver to my niece was my best decision!"</p>
+                <h3>- Lisa W.</h3>
+            </div>
+            <div class="testimonial-card">
+                <img src="https://randomuser.me/api/portraits/men/4.jpg" alt="Michael B.">
+                <p>"A heart transplant saved my life. I'm forever grateful to my donor's family."</p>
+                <h3>- Michael B.</h3>
+            </div>
+
+            <!-- Hidden Reviews -->
+            <div class="testimonial-card hidden">
+                <img src="https://randomuser.me/api/portraits/women/5.jpg" alt="Emily R.">
+                <p>"My father received a cornea transplant, and now he can see again!"</p>
+                <h3>- Emily R.</h3>
+            </div>
+            <div class="testimonial-card hidden">
+                <img src="https://randomuser.me/api/portraits/men/6.jpg" alt="David K.">
+                <p>"Being a living kidney donor to my brother was the most fulfilling choice I’ve ever made."</p>
+                <h3>- David K.</h3>
+            </div>
+            <div class="testimonial-card hidden">
+                <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="James P.">
+                <p>"A liver transplant saved my best friend's life. I can't express my gratitude enough."</p>
+                <h3>- James P.</h3>
+            </div>
+            <div class="testimonial-card hidden">
+                <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Anna L.">
+                <p>"As a nurse, I've seen the impact of organ donation firsthand. It's truly life-changing."</p>
+                <h3>- Anna L.</h3>
+            </div>
+        </div>
+
+        <!-- Show More / See Less Button -->
+        <button class="toggle-btn" id="toggleButton" onclick="toggleReviews()">Show More</button>
+    </section>
+
+    <script>
+        function toggleReviews() {
+            let hiddenReviews = document.querySelectorAll('.hidden');
+            let button = document.getElementById('toggleButton');
+
+            if (button.innerText === "Show More") {
+                hiddenReviews.forEach((review, index) => {
+                    setTimeout(() => {
+                        review.style.display = 'flex';
+                        setTimeout(() => {
+                            review.style.opacity = '1';
+                            review.style.transform = 'scale(1)';
+                        }, 50);
+                    }, index * 100);
+                });
+                button.innerText = "See Less";
+            } else {
+                hiddenReviews.forEach((review, index) => {
+                    setTimeout(() => {
+                        review.style.opacity = '0';
+                        review.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            review.style.display = 'none';
+                        }, 500);
+                    }, index * 100);
+                });
+                button.innerText = "Show More";
+            }
+        }
+    </script>
+
+</body>
+</html>
+
+        <footer class="site-footer section-padding text-center text-lg-start" id="contact">
             <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-5 me-auto col-12">
-                        <h5 class="mb-lg-4 mb-3">Opening Hours</h5>
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex">
-                                Sunday : Closed
+                <div class="row justify-content-between gy-4 text-lg-start">
+        
+                    <!-- Opening Hours Section -->
+                    <div class="col-lg-4 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Opening Hours</h5>
+                        <ul class="list-group list-group-flush mx-auto" style="max-width: 280px;">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Sunday:</span> <span>Closed</span>
                             </li>
-
-                            <li class="list-group-item d-flex">
-                                Monday, Tuesday - Firday
-                                <span>8:00 AM - 3:30 PM</span>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Mon - Fri:</span> <span>8:00 AM - 3:30 PM</span>
                             </li>
-
-                            <li class="list-group-item d-flex">
-                                Saturday
-                                <span>10:30 AM - 5:30 PM</span>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Saturday:</span> <span>10:30 AM - 5:30 PM</span>
                             </li>
                         </ul>
                     </div>
-
-                    <div class="col-lg-2 col-md-6 col-12 my-4 my-lg-0">
-                        <h5 class="mb-lg-4 mb-3">Our Clinic</h5>
-
-                        <p><a href="mailto:hello@company.co">hello@company.co</a><p>
-
-                        <p>123 Digital Art Street, San Diego, CA 92123</p>
+        
+                    <!-- Our Clinic Section -->
+                    <div class="col-lg-3 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Our Clinic</h5>
+                        <p class="text-start mb-1">
+                            <a href="mailto:organconnect@gmail.com" class="text-decoration-none text-dark email-hover" id="email">
+                                organconnect@gmail.com
+                            </a>
+                            <span class="copy-icon">📋</span>
+                        </p>
+                        <p class="text-start">123 Digital Art Street, San Diego, CA 92123</p>
                     </div>
-
-                    <div class="col-lg-3 col-md-6 col-12 ms-auto">
-                        <h5 class="mb-lg-4 mb-3">Socials</h5>
-
-                        <ul class="social-icon">
-                            <li><a href="#" class="social-icon-link bi-facebook"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-twitter"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
-
-                            <li><a href="#" class="social-icon-link bi-youtube"></a></li>
-                        </ul>
+        
+                    <!-- Social Media Section -->
+                    <div class="col-lg-3 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Socials</h5>
+                        <div class="d-flex justify-content-lg-start justify-content-center">
+                            <a href="#" class="social-icon-link bi bi-facebook me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-twitter me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-instagram me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-youtube"></a>
+                        </div>
                     </div>
-
-                    <div class="col-lg-3 col-12 ms-auto mt-4 mt-lg-0">
-                        <p class="copyright-text">Copyright © Medic Care 2021 
-                        <br><br>Design: <a href="https://templatemo.com" target="_parent">TemplateMo</a></p>
-                    </div>
-
+        
                 </div>
-            </section>
+        
+                <!-- Copyright Section -->
+                <div class="text-center mt-4 pt-3 border-top fade-in">
+                    <p class="copyright-text mb-0">Copyright © ORGAN CONNECT 2025</p>
+                </div>
+            </div>
         </footer>
+        
+        <style>
+            /* Footer Styling */
+            .site-footer {
+                background: linear-gradient(to right, #64b5f6, #bbdefb);
+                color: white;
+                padding: 50px 20px;
+                animation: fadeIn 1.5s ease-in-out;
+            }
+        
+            .site-footer h5 {
+                color: #fff;
+                font-size: 22px;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                transition: transform 0.3s ease, text-shadow 0.3s ease;
+            }
+        
+            .glow-effect:hover {
+                transform: scale(1.05);
+                text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+            }
+        
+            .list-group-item {
+                background: transparent;
+                color: white;
+                border: none;
+                font-size: 16px;
+            }
+        
+            /* Social Media Icons */
+            .social-icon-link {
+                font-size: 24px;
+                color: white;
+                transition: transform 0.3s ease, color 0.3s ease;
+                display: inline-block;
+            }
+        
+            .social-icon-link:hover {
+                transform: scale(1.2) rotate(5deg);
+                color: #ffeb3b;
+            }
+        
+            /* Email Hover + Copy Animation */
+            .email-hover {
+                transition: color 0.3s ease;
+                cursor: pointer;
+            }
+        
+            .email-hover:hover {
+                color: #ffeb3b;
+            }
+        
+            .copy-icon {
+                font-size: 18px;
+                margin-left: 5px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+        
+            .copy-icon:hover {
+                transform: scale(1.2);
+                color: #ffeb3b;
+            }
+        
+            /* Fade-in Animation */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        
+            .fade-in {
+                opacity: 0;
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+        
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .site-footer {
+                    text-align: center;
+                }
+            }
+        </style>
+        
+        <script>
+            // Scroll Animation - Fade in Elements
+            document.addEventListener("DOMContentLoaded", function () {
+                let fadeElements = document.querySelectorAll(".fade-in");
+        
+                function revealOnScroll() {
+                    let scrollPosition = window.scrollY + window.innerHeight;
+                    fadeElements.forEach(element => {
+                        let elementTop = element.offsetTop;
+                        if (scrollPosition > elementTop + 50) {
+                            element.style.opacity = "1";
+                            element.style.transform = "translateY(0)";
+                        }
+                    });
+                }
+        
+                window.addEventListener("scroll", revealOnScroll);
+                revealOnScroll();
+            });
+        
+            // Email Copy to Clipboard
+            {% comment %} document.getElementById("email").addEventListener("click", function () {
+                let emailText = this.textContent;
+                navigator.clipboard.writeText(emailText).then(() => {
+                    alert("Email copied to clipboard!");
+                });
+            }); {% endcomment %}
+        </script>
+        
+        
+        
 
         <!-- JAVASCRIPT FILES -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/scrollspy.min.js"></script>
-        <script src="js/custom.js"></script>
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/assets/js/owl.carousel.min.js"></script>
+        <script src="/static/assets/js/scrollspy.min.js"></script>
+        <script src="/static/assets/js/custom.js"></script>
 <!--
 
 TemplateMo 566 Medic Care

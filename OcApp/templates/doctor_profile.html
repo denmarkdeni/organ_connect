@@ -7,81 +7,204 @@
     <title>Update Doctor Profile</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
+        /* --- Global Styles --- */
         body {
-            background-color: #f8f9fa;
+            background-color: #ADD8E6; /* Light Blue Background */
+            font-family: 'Arial', sans-serif; /* Modern font */
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.7; /* Improved line spacing */
+            display: flex; /* Flexbox for centering */
+            justify-content: center;
+            align-items: center;
         }
+
         .container {
             max-width: 600px;
-            margin-top: 50px;
+            width: 90%; /* Responsive width */
+            padding: 2rem;
         }
+
+        /* --- Card Styles --- */
         .card {
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 1.2rem; /* Rounded corners */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+            border: none;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(255, 255, 255, 0.8); /* Slightly less opaque */
+            backdrop-filter: blur(12px); /* Increased blur */
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            padding: 1.8rem 2.5rem; /* Increased padding */
+            text-align: center;
+            font-size: 1.8rem; /* Larger header */
+            font-weight: 600;
+            letter-spacing: 0.05rem; /* Spacing for readability */
+        }
+
+        .card-body {
+            padding: 3rem; /* Further increased padding */
+        }
+
+        /* --- Form Styles --- */
+        .mb-4 { /* Increased margin */
+            margin-bottom: 2.2rem;
+        }
+
+        .mb-4 label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.7rem;
+            color: #555; /* Slightly darker label */
+            font-size: 1.1rem;
+        }
+
         .form-control, .form-select {
-            border-radius: 8px;
+            border-radius: 0.8rem;
+            border: 1px solid #ddd;
+            padding: 1rem 1.5rem; /* Increased padding */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            font-size: 1rem;
+            background-color: #f9f9f9; /* Light background */
         }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* --- Button Styles --- */
         .btn-primary {
             background-color: #007bff;
             border: none;
-            border-radius: 8px;
+            border-radius: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-weight: 600;
+            width: 100%;
+            font-size: 1.1rem;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
+            transform: scale(1.03);
         }
+
+        .btn-outline-secondary {
+            border-radius: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            border-color: #777;
+            color: #777;
+            width: 100%;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: #f0f0f0;
+            border-color: #555;
+            color: #555;
+        }
+
+        /* --- Alert Styles --- */
         .alert {
-            border-radius: 8px;
+            border-radius: 0.8rem;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+
+        /* --- Text Styles --- */
+        .text-center {
+            margin-top: 2.5rem;
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        hr {
+            margin: 3rem 0;
+            border: 1px solid #eee;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="card p-4">
-        <h2 class="text-center mb-3">Update Doctor Profile</h2>
+    <div class="card">
+        <div class="card-header">
+            <h2>Update Doctor Profile</h2>
+        </div>
+        <div class="card-body">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
+            <form method="POST">
+                {% csrf_token %}
 
-        <form method="POST">
-            {% csrf_token %}
-            
-            <div class="mb-3">
-                <label for="name" class="form-label">Full Name:</label>
-                <input type="text" name="name" class="form-control" value="{{ doctor.last_name }}" required>
-            </div>
+                <div class="mb-4">
+                    <label for="name" class="form-label">Full Name:</label>
+                    <input type="text" name="name" class="form-control" value="{{ doctor.last_name }}" required>
+                </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email:</label>
-                <input type="email" name="email" class="form-control" value="{{ doctor.email }}" required>
-            </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" name="email" class="form-control" value="{{ doctor.email }}" required>
+                </div>
 
-            <div class="mb-3">
-                <label for="specialization" class="form-label">Specialization:</label>
-                <input type="text" name="specialization" class="form-control" value="{{ doctor.specialization }}" required>
-            </div>
+                <div class="mb-4">
+                    <label for="specialization" class="form-label">Specialization:</label>
+                    <input type="text" name="specialization" class="form-control" value="{{ doctor.doctor.specialization }}" required>
+                </div>
 
-            <div class="mb-3">
-                <label for="hospital" class="form-label">Select Hospital:</label>
-                <select name="hospital_id" class="form-select">
-                    {% for hospital in hospitals %}
-                        <option value="{{ hospital.id }}" {% if doctor.hospital.id == hospital.id %}selected{% endif %}>
-                            {{ hospital.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
+                <div class="mb-4">
+                    <label for="hospital" class="form-label">Select Hospital:</label>
+                    <select name="hospital_id" class="form-select">
+                        {% for hospital in hospitals %}
+                            <option value="{{ hospital.id }}" {% if doctor.hospital.id == hospital.id %}selected{% endif %}>
+                                {{ hospital.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <button type="submit" class="btn btn-primary w-100">Update Profile</button>
-        </form>
+                <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+            </form>
 
-        <hr>
+            <hr>
 
-        <p class="text-center">Hospital not listed?</p>
-        <a href="{% url 'new_hospital' %}" class="btn btn-outline-secondary w-100">Request a New Hospital</a>
+            <p class="text-center">Hospital not listed?</p>
+            <a href="{% url 'new_hospital' %}" class="btn btn-outline-secondary w-100">Request a New Hospital</a>
+        </div>
     </div>
 </div>
 

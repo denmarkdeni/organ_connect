@@ -122,6 +122,7 @@ class Notification(models.Model):
     is_read = models.BooleanField(default=False)
     reply_message = models.TextField(blank=True, null=True) 
     created_at = models.DateTimeField(auto_now_add=True)
+    operation_schedule_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return f"Notification from {self.sender.username} to {self.receiver.username}"

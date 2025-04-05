@@ -8,60 +8,69 @@ from django.http import JsonResponse
 from django.utils.timezone import make_aware
 from .models import UserInfo, Donor, Recipient ,Organ, OrganMatch, Notification, Staff, Hospital, Doctor
 import json, datetime
-from .forms import ReplyForm
+from .forms import ReplyForm, HospitalVerificationForm
 
 def index(request):
     return render(request,'index.html')
 
-def register(request):
+def login_register(request):
     if request.method == 'POST':
+
+        if request.POST['action']=="register":
+            fullname = request.POST['name']
+            email = request.POST['email']
+            username = request.POST['username']
+            password = request.POST['password']
+            user_role = request.POST['role']
+
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username already exists')
+                return redirect('login_register')
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'Email already exists')
+                return redirect('login_register')
+            user = User.objects.create_user(username=username, email=email, password=password, last_name=fullname)
+
+            UserInfo.objects.create(user=user, email=email, userRole=user_role)
+
+            messages.success(request, 'Your account has been created successfully!')
+            return redirect('login_register')
         
-        fullname = request.POST['name']
-        email = request.POST['email']
-        username = request.POST['username']
-        password = request.POST['password']
-        user_role = request.POST['role']
+        if request.POST['action']=="login":
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user = User.objects.create_user(username=username, email=email, password=password, last_name=fullname)
-
-        UserInfo.objects.create(user=user, email=email, userRole=user_role)
-
-        messages.success(request, 'Your account has been created successfully!')
-        return redirect('login')
-    return render(request,'register.html')
-
-def login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            auth_login(request, user)
-            if user.is_superuser:
-                return redirect('admin_dash')
-            if user.userinfo.userRole =="doctor":
-                return redirect('doctor_dash')
-            if user.userinfo.userRole =="donor":
-                return redirect('donor_dash')
-            if user.userinfo.userRole =="recipient":
-                return redirect('recipient_dash')
-            if user.userinfo.userRole =="facility":
-                return redirect('facility_dash')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                messages.success(request, 'Login at {0}'.format(datetime.datetime.now()))
+                if user.is_superuser:
+                    return redirect('admin_dash')
+                if user.userinfo.userRole =="doctor":
+                    return redirect('doctor_dash')
+                if user.userinfo.userRole =="donor":
+                    return redirect('donor_dash')
+                if user.userinfo.userRole =="recipient":
+                    return redirect('recipient_dash')
+                if user.userinfo.userRole =="facility":
+                    return redirect('facility_dash')
+                return redirect('login_register')
+            else:
+                messages.error(request, 'Invalid username or password')
             
-        else:
-            messages.error(request, 'Invalid username or password')
-    return render(request,'login.html')
+    return render(request,'login_register.html')
 
 def log_out(request):
     logout(request)
-    return redirect('login')
+    messages.success(request, 'You have been logged out')
+    return redirect('login_register')
 
 def admin_dash(request):
     return render(request,'admin_dash.html')
 
 def doctor_dash(request):
-    return render(request,'doctor_dash.html')
+    notification_count = Notification.objects.filter(is_read=False, receiver=request.user).count()
+    return render(request,'doctor_dash.html',{'notification_count':notification_count})
 
 def donor_dash(request):
     return render(request,'donor_dash.html')
@@ -79,6 +88,13 @@ def manage_users(request):
 def donor_console(request):
     user = User.objects.get(id=request.user.id)
     return render(request,'donor_console.html',{"user":user})
+
+def remove_user(request, user_id):
+    user = User.objects.get(id=user_id)
+    name = user.username
+    user.delete()
+    messages.success(request,f" User {name} Deleted Successfully!")
+    return redirect('manage_users')
 
 @login_required
 def save_donor(request):
@@ -116,6 +132,11 @@ def save_organ_request(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
+            user= request.user
+            # Check if recipient profile already exists for the user
+            if Recipient.objects.filter(user=user).exists():
+                return JsonResponse({"error": "You have already registered as a recipient!"}, status=400)
+            
             organ_request = Recipient(
                 user=request.user,  # Assuming recipient is logged in
                 fullname=data.get('name'),
@@ -158,20 +179,14 @@ def organ_inventory(request):
         organ_type = request.POST['organ_type']
         status = request.POST['status']
         donor_id = request.POST['donor']
-        recipient_id = request.POST['recipient']
-    
         donor = Donor.objects.get(id=donor_id)
-        if recipient_id != "":
-            recipient = Recipient.objects.get(id=recipient_id)
-        else:
-            recipient =None
 
         # Create or update the organ in the inventory
         Organ.objects.create(
             organ_type=organ_type,
             status=status,
             donor=donor,
-            recipient=recipient
+            blood_type=donor.blood_type
         )
 
         return redirect('organ_inventory')
@@ -327,7 +342,7 @@ def mark_as_read(request, notification_id):
     return redirect('notification')
 
 def facility_schedule(request):
-    notifications = Notification.objects.all()
+    notifications = Notification.objects.all().order_by('-created_at')
     return render(request, 'facility_schedule.html',{'notifications':notifications})
 
 @login_required
@@ -347,7 +362,8 @@ def schedule_operation(request, notification_id):
                 message=f"Mr/Mrs.{notification.receiver.username}, Your operation has been scheduled for {schedule_time}",
                 is_read=False,  
             )
-
+            notification.operation_schedule_date = schedule_time
+            notification.save()
             new_notification.save() 
             return redirect("facility_schedule")
 
@@ -363,14 +379,14 @@ def request_new_hospital(request):
             messages.error(request, "Hospital already exists!")
         else:
             Hospital.objects.create(name=name, address=address, contact=contact)
-            messages.success(request, "New hospital registered successfully!")
-            return redirect("update_hospital")  # Redirect to update hospital page
+            messages.success(request, "New hospital Uploaded! , Wait until Admin will Review and Verify Hospital ")
+            return redirect("new_hospital") 
 
     return render(request, "new_hospital.html")
 
 def update_staff(request):
     staff = request.user
-    hospitals = Hospital.objects.all()
+    hospitals = Hospital.objects.filter(is_verified=True)
 
     if request.method == "POST":
         hospital_id = request.POST.get("hospital_id")
@@ -401,3 +417,22 @@ def update_doctor(request):
 
     return render(request, "doctor_profile.html", {"doctor": doctor, "hospitals": hospitals})
 
+@login_required
+def hospital_verification(request):
+    hospitals = Hospital.objects.all()
+    return render(request, 'hospital_verification.html', {'hospitals': hospitals})
+
+@login_required
+def verify_hospital(request, hospital_id):
+    hospital = get_object_or_404(Hospital, id=hospital_id)
+    
+    if request.method == "POST":
+        form = HospitalVerificationForm(request.POST, instance=hospital)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital_verification')  # Redirect back to the list
+    
+    else:
+        form = HospitalVerificationForm(instance=hospital)
+    
+    return render(request, 'verify_hospital.html', {'form': form, 'hospital': hospital})
