@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel (Dark Gray Gradient Theme)</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #37474F, #263238), url('/static/images/adminbg.jpg');
+            background-size: cover;
+            background-blend-mode: multiply;
+            color: #CFD8DC;
+            min-height: 100vh;
+            overflow-y: auto;
+        }
+
+        .content-wrapper {
+            display: flex;
+            flex: 1;
+        }
+
+        aside {
+            width: 250px;
+            background: linear-gradient(135deg, rgba(55, 71, 79, 0.7), rgba(38, 50, 56, 0.7));
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            color: #CFD8DC;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 40px);
+            margin: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        aside:hover {
+            transform: translateX(5px);
+        }
+
+        aside h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #1976D2;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        aside nav a {
+            display: block;
+            padding: 10px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: #CFD8DC;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        aside nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #d32f2f;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 0.8em;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            animation: slideIn 0.5s ease-out;
+            margin: 20px;
+            min-height: calc(100vh - 120px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(55, 71, 79, 0.7), rgba(38, 50, 56, 0.7));
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-info {
+            text-align: left;
+        }
+
+        .profile-info h3 {
+            margin-bottom: 5px;
+            color: #1976D2;
+        }
+
+        .profile-img img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(55, 71, 79, 0.7), rgba(38, 50, 56, 0.7));
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h3 {
+            margin-bottom: 15px;
+            color: #1976D2;
+            text-align: left;
+        }
+
+        .section p {
+            text-align: left;
+        }
+
+        .logout-btn {
+            background-color: rgba(220, 53, 69, 0.8);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            display: block;
+            margin: 20px auto; /* Center the logout button */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: fit-content;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(210, 52, 68, 0.9);
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 10px 10px;
+            color: #90A4AE;
+            font-size: 1.1em;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <aside>
+            <h2>Admin Panel</h2>
+            <nav>
+                <a href="/admin_dash">Home</a>
+                <a href="/hospitals">Hospital Overview</a>
+                <!-- <a href="#">Manage Profile</a>
+                <a href="#">Notifications<span class="notification-badge">3</span></a> -->
+                <a href="{% url 'manage_users' %}">Users</a>
+            </nav>
+            <a href="{% url 'log_out' %}" class="logout-btn">Logout</a>
+        </aside>
+
+        <div class="main-content">
+            <div class="header">
+                <div class="profile">
+                    <div class="profile-info">
+                        <h3>{{ request.user.last_name }} </h3>
+                        <p>Email: {{ request.user.email }} </p>
+                        <p>User Role: admin</p>
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p style="color: green;">{{ message }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="profile-img">
+                        <img src="/static/images/admin_profile1.jpg" alt="Admin Profile">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Home</h3>
+                <p>Welcome to the Admin Panel! Here, you can manage your profile, view notifications, and perform various administrative actions.</p>
+            </div>
+
+            <div class="section">
+                <h3>Manage Profile</h3>
+                <p>Click here to edit your profile information, update your contact details, or change your password.</p>
+            </div>
+
+            <div class="section">
+                <h3>Notifications</h3>
+                <p>You have 3 new notifications. Check them for updates.</p>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        This is an administrative panel. Access is restricted to authorized administrators only.
+    </div>
+</body>
+</html>

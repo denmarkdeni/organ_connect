@@ -1,0 +1,1932 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>ORGAN connect</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+        <link href="{% static 'assets/css/bootstrap.min.css'%}" rel="stylesheet">
+
+        <link href="{% static 'assets/css/bootstrap-icons.css'%}" rel="stylesheet">
+
+        <link href="{% static 'assets/css/owl.carousel.min.css'%}" rel="stylesheet">
+
+        <link href="{% static 'assets/css/owl.theme.default.min.css'%}" rel="stylesheet">
+
+        <link href="{% static 'assets/css/templatemo-medic-care.css'%}" rel="stylesheet">
+<!--
+
+TemplateMo 566 Medic Care
+
+https://templatemo.com/tm-566-medic-care
+
+-->
+    </head>
+    
+    <body id="top" style="background:melon">
+    
+        <main>
+
+            {% load static %}
+            <nav class="navbar navbar-expand-lg fixed-top glass-navbar" style="top: 20px; width: 80%; margin: 0 auto;">
+                <div class="container d-flex justify-content-between align-items-center">
+                    <ul class="navbar-nav d-flex flex-row me-auto">
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#hero">Home</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#stepsofdonation">Donation Steps</a></li>
+                    </ul>
+            
+                    <a class="navbar-brand text-dark fw-bold fade-in-up mx-auto text-center animated-brand" href="/login-register">
+                        ORGAN CONNECT
+                        <strong class="d-block text-muted small-text">Care Each Other</strong>
+                    </a>
+            
+                    <ul class="navbar-nav d-flex flex-row ms-auto">
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#reviews">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#Importance">Importance</a></li>
+                        <li class="nav-item"><a class="nav-link fade-in-up scroll-link px-3" href="#contact">Contact</a></li>
+                    </ul>
+            
+                    <div class="dropdown ms-3">
+                        <a href="#" class="nav-link text-dark account-icon" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle fa-lg"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end animated-dropdown" aria-labelledby="accountDropdown">
+                            <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i> Profile</a></li>
+                            <li><a class="dropdown-item" href="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="top-shadow"></div>
+            
+            <style>
+                /* Modern Navbar Styling */
+                .glass-navbar {
+                    background: rgba(255, 255, 255, 0.2);
+                    backdrop-filter: blur(6px);
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                    transition: background 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    padding: 15px 0;
+                    min-height: 80px;
+                    z-index: 1000;
+                    border-radius: 20px 20px 20px 20px;
+                    overflow: hidden;
+                }
+            
+                /* Navbar Scroll Effect */
+                .glass-navbar.scrolled {
+                    background: rgba(255, 255, 255, 0.8);
+                    backdrop-filter: blur(12px);
+                    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+                }
+            
+                /* Navbar Text & Spacing */
+                .navbar-nav {
+                    gap: 25px;
+                }
+            
+                .navbar-nav .nav-link {
+                    font-size: 18px;
+                    font-weight: 500;
+                    color: black;
+                    padding: 12px 15px;
+                    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out, opacity 0.3s ease-in-out;
+                    opacity: 1;
+                }
+            
+                /* Hover Effect */
+                .navbar-nav .nav-link:hover {
+                    color: #007bff;
+                    transform: scale(1.1);
+                }
+            
+                /* Active Link */
+                .navbar-nav .nav-link.active {
+                    color: #007bff;
+                    font-weight: bold;
+                }
+            
+                /* Brand */
+                .navbar-brand {
+                    font-size: 24px;
+                    letter-spacing: 1px;
+                    transition: opacity 0.3s ease-in-out;
+                    opacity: 1;
+                }
+            
+                .small-text {
+                    font-size: 14px;
+                }
+            
+                /* Account Icon */
+                .account-icon {
+                    font-size: 24px;
+                    transition: opacity 0.3s ease-in-out;
+                    opacity: 1;
+                }
+            
+                /* Dropdown Animation */
+                .animated-dropdown {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                    transition: all 0.3s ease-in-out;
+                    display: none;
+                }
+            
+                .dropdown:hover .animated-dropdown {
+                    opacity: 1;
+                    transform: translateY(0);
+                    display: block;
+                }
+            
+                /* Responsive Fixes */
+                @media (max-width: 992px) {
+                    .navbar-brand {
+                        font-size: 20px;
+                    }
+            
+                    .navbar-nav {
+                        flex-direction: column;
+                        text-align: center;
+                    }
+                }
+            
+                /* Top Shadow */
+                .top-shadow {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 20px;
+                    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+                    pointer-events: none;
+                    z-index: 1001;
+                }
+            
+                /* Organ connect animation */
+                .animated-brand {
+                    transition: transform 0.3s ease-in-out; /* Add transition */
+                }
+            
+                .animated-brand:hover {
+                    transform: scale(1.1); /* Scale up on hover */
+                }
+            </style>
+            
+            <script>
+                // Navbar Background Change on Scroll
+                window.addEventListener('scroll', function () {
+                    const navbar = document.querySelector('.glass-navbar');
+                    const navLinks = document.querySelectorAll('.navbar-nav .nav-link, .navbar-brand, .account-icon');
+                    if (window.scrollY > 90) {
+                        navbar.classList.add('scrolled');
+                        navLinks.forEach(link => link.style.opacity = '0.7');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                        navLinks.forEach(link => link.style.opacity = '1');
+                    }
+                });
+            
+                // Smooth Scrolling Effect for Navbar Links
+                document.querySelectorAll('.scroll-link').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                });
+            
+                // Dropdown Animation for Account Menu
+                document.getElementById('accountDropdown').addEventListener('click', function (event) {
+                    event.preventDefault();
+                    const dropdownMenu = document.querySelector('.animated-dropdown');
+                    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+                });
+            
+                // Hide Dropdown Menu When Clicking Outside
+                document.addEventListener('click', function (event) {
+                    const dropdownMenu = document.querySelector('.animated-dropdown');
+                    const accountIcon = document.getElementById('accountDropdown');
+            
+                    if (!accountIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.style.display = 'none';
+                    }
+                });
+            </script>
+          
+            
+
+
+<!-- JavaScript to Ensure Video Loads -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var video = document.getElementById("bgVideo");
+        
+        video.oncanplaythrough = function () {
+            video.play().catch(error => console.log("Autoplay prevented:", error));
+        };
+        
+        video.onerror = function () {
+            console.error("Error loading video. Check the file path or format.");
+        };
+    });
+</script>
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video with Content Below</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Add this to remove extra space */
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex: 1 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<script>
+    // Debugging Script
+    document.addEventListener('DOMContentLoaded', function() as any {
+        var videoSource = document.getElementById('videoSource');
+        if (videoSource) {
+            console.log('Video source:', videoSource.src); // Log the video source
+        } else {
+            console.error('Video source element not found.');
+        }
+
+        var myVideo = document.querySelector('video');
+        if(myVideo){
+            myVideo.addEventListener('error', function(e) {
+                console.error('Video error:', e, myVideo.error);
+            });
+        }
+    });
+
+</script>
+
+</body>
+</html>
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammu - Girl Bot Icon Chat</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+        }
+
+        .ChatContainer {
+            width: 400px;
+            height: 500px;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            background: url('your-background-image.jpg') no-repeat center center;
+            background-size: cover;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ChatContainer.Show {
+            display: flex;
+        }
+
+        .ChatHeader {
+            background-color: rgba(25, 118, 210, 0.8);
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .ChatMessages {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .Message {
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 70%;
+            word-wrap: break-word;
+            backdrop-filter: blur(5px);
+        }
+
+        .UserMessage {
+            background-color: rgba(187, 222, 251, 0.8);
+            align-self: flex-end;
+            color: #1a237e;
+        }
+
+        .BotMessage {
+            background-color: rgba(224, 247, 250, 0.8);
+            align-self: flex-start;
+            color: #333;
+        }
+
+        .UserInputContainer {
+            padding: 10px;
+            border-top: 1px solid rgba(221, 221, 221, 0.5);
+            display: flex;
+            background-color: rgba(245, 245, 245, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .UserInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            margin-right: 10px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .SendButton {
+            background-color: rgba(25, 118, 210, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+            backdrop-filter: blur(5px);
+        }
+
+        .SendButton:hover {
+            background-color: rgba(21, 101, 192, 0.8);
+        }
+
+        .ChatIcon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .ChatIcon img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .ChatIcon img:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="ChatIcon">
+        <img src="/static/images/chatboticon.jpg" alt="Ammu Bot Icon">
+    </div>
+    <div class="ChatContainer">
+        <div class="ChatHeader">
+            🤖...Ammu
+        </div>
+        <div id="chatMessages" class="ChatMessages"></div>
+        <div class="UserInputContainer">
+            <input type="text" id="userInput" class="UserInput" placeholder="Type your message...">
+            <button id="sendButton" class="SendButton">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const chatContainer = document.querySelector('.ChatContainer');
+        const chatIcon = document.querySelector('.ChatIcon');
+
+        chatIcon.addEventListener('click', () => {
+            chatContainer.classList.toggle('Show');
+            userInput.focus();
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userMessage = userInput.value.trim().toLowerCase();
+            if (!userMessage) return;
+
+            addMessage(userMessage, 'UserMessage');
+            userInput.value = '';
+
+            fetch("/chatbot/chat/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userMessage })
+            })
+            .then(response => response.json())
+            .then(data => {
+                botMessage(data.message,'BotMessage')
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function addMessage(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('Message', className);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function botMessage(message, className) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('Message', className);
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function getBotResponse(userMessage) {
+    const responses = {
+        "hello": "Hello there! How can I assist you today?",
+        "hi": "Hi! How’s your day going?",
+        "how are you": "I'm doing great! Thanks for asking.",
+        "good morning": "Good morning! Hope you have a wonderful day.",
+        "good night": "Good night! Sweet dreams.",
+        "i am happy": "That's awesome! Keep smiling. 😊",
+        "i am sad": "Oh no! I'm here if you want to talk. 💙",
+        "tell me a joke": "Why did the scarecrow win an award? Because he was outstanding in his field! 😂",
+        "who is your creator": "I was created by a cool developer who loves coding!",
+        
+        // Organ Donation Related
+        "what is organ donation": "Organ donation is the process of giving an organ to save someone’s life.",
+        "who can donate organs": "Almost anyone! Doctors assess eligibility at the time of donation.",
+        "what organs can be donated": "Organs that can be donated include kidneys, liver, heart, lungs, pancreas, and intestines.",
+        "how does organ donation work": "It involves a medical professional surgically removing a healthy organ from a donor and transplanting it into a recipient.",
+        "is organ donation safe": "Yes, it's generally safe. Donors undergo thorough medical evaluations to ensure their health isn't compromised.",
+        
+        // New Topics Added
+        "what is your name": "I'm your friendly chatbot!",
+        "what can you do": "I can answer questions, tell jokes, and chat with you!",
+        "what is AI": "AI stands for Artificial Intelligence, which enables machines to mimic human-like thinking.",
+        "how does AI work": "AI uses algorithms and data to make decisions and perform tasks like humans.",
+        "what is the capital of France": "The capital of France is Paris.",
+        "who is the president of the USA": "That depends on the current time! You can check the latest updates online.",
+        "what's the weather like": "I can’t check the weather, but you can use a weather app for the latest updates!",
+        "do you like humans": "Of course! I exist to help and chat with you.",
+        "can you sing": "I wish I could, but I can tell you song lyrics!",
+        "what is the meaning of life": "The meaning of life is different for everyone. What do you think?",
+        "do you have feelings": "Not exactly, but I can understand emotions and try to make you smile!",
+        "how old are you": "I'm as old as my code! Always learning and evolving.",
+        "where do you live": "I live in the cloud, floating through the internet!",
+        "who is the smartest person": "Many people are incredibly smart! Einstein, Newton, and modern scientists all contribute to knowledge.",
+        "what's your favorite color": "I like all colors, but blue is quite calming!",
+        
+        // Fun Responses
+        "do you like pizza": "Who doesn't love pizza? 🍕",
+        "cats or dogs": "I love both! Cats are independent, and dogs are loyal. Which do you prefer?",
+        "tell me a fun fact": "Did you know that honey never spoils? Archaeologists have found pots of honey in ancient Egyptian tombs that are still edible!",
+        "do you sleep": "I don’t need sleep, but I do like resting between conversations!",
+        "are you real": "I'm as real as the internet! But I don’t have a physical form.",
+        
+        "default": "Hmm... I don't understand that yet. Can you ask me something else?"
+    };
+
+    let message = responses[userMessage.toLowerCase()] || responses["default"];
+    botMessage(message,'BotMessage')
+}
+
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video with Gradient Blend</title>
+    <style>
+        html, body {
+            height: auto;
+            margin: 0;
+            background-color: #fff;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .bottom-gradient {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 250px; /* Increased height for more white gradient */
+            background: linear-gradient(to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(255, 255, 255, 0.02) 5%,
+                rgba(255, 255, 255, 0.08) 10%,
+                rgba(255, 255, 255, 0.15) 15%,
+                rgba(255, 255, 255, 0.25) 25%,
+                rgba(255, 255, 255, 0.4) 40%,
+                rgba(255, 255, 255, 0.6) 60%,
+                rgba(255, 255, 255, 0.8) 80%,
+                rgba(255, 255, 255, 0.9) 90%,
+                white 95%,
+                white 100%
+            );
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .content-box {
+            position: absolute;
+            bottom: 80px; /* Adjusted bottom position to accommodate the taller gradient */
+            right: 40px; /* Distance from the right edge */
+            left: auto; /* Ensure left doesn't interfere with right positioning */
+            transform: translateY(0); /* Reset any vertical translation */
+            width: 50%; /* Width of the box */
+            background-color: rgba(50, 50, 50, 0.7);
+            color: #fff; /* Changed text color to white for better contrast */
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 900px; /* Maximum width of the box */
+            z-index: 2;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            background-image: url('your-image.jpg');
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+            text-align: left; /* Align text to the left */
+        }
+
+        .content-box h3 {
+            font-size: 2.5em;
+            margin-top: 0;
+            margin-bottom: 25px;
+            color: #fff; /* Changed heading color to white */
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            letter-spacing: 0.08em;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .content-box p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            color: #fff; /* Changed paragraph color to white */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-family: 'Georgia', serif;
+            word-spacing: 0.1em;
+        }
+
+        .content-box a {
+            color: #007bff; /* Example link color */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .content-box a:hover {
+            text-decoration: underline;
+        }
+
+        .content-box:hover {
+            transform: translateY(-8px); /* Only vertical translation on hover */
+            box-shadow: 12px 12px 28px rgba(0, 0, 0, 0.6);
+        }
+
+        .content-box.highlight {
+            border: 3px solid #007bff; /* Example highlight border color */
+            box-shadow: 6px 6px 18px rgba(0, 123, 255, 0.7); /* Example highlight shadow */
+            transform: scale(1.03) translateY(0); /* Only scale on highlight */
+        }
+
+        @keyframes slideUpFadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .refer-animation {
+            animation: slideUpFadeIn 1s ease-out forwards; /* Apply the slide-up and fade-in animation */
+        }
+    </style>
+</head>
+<body>
+
+<div class="video-container" id="hero">
+    <video autoplay loop muted>
+        <source id="videoSource" src="static/assets/video/webhpbg3333.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="bottom-gradient"></div>
+    <div class="content-box" id="loadingBox">
+        <h3>Give the Gift of Life</h3>
+        <p>Organ donation can <a href="#">save and transform</a> the lives of many.</p>
+        <p>One organ donor can potentially save up to eight lives and enhance many more.</p>
+        <p>Consider registering as an organ donor today and make a lasting impact.</p>
+        <p>Talk to your family about your decision to ensure your wishes are known.</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var videoSource = document.getElementById('videoSource');
+        if (videoSource) {
+            console.log('Video source:', videoSource.src);
+        } else {
+            console.error('Video source element not found.');
+        }
+
+        var myVideo = document.querySelector('video');
+        if(myVideo){
+            myVideo.addEventListener('error', function(e) {
+                console.error('Video error:', e, myVideo.error);
+            });
+        }
+
+        const loadingBox = document.getElementById('loadingBox');
+        loadingBox.classList.add('refer-animation'); // Add the animation class on load
+
+        loadingBox.addEventListener('mouseover', () => {
+            loadingBox.classList.add('highlight');
+        });
+
+        loadingBox.addEventListener('mouseout', () => {
+            loadingBox.classList.remove('highlight');
+        });
+    });
+</script>
+
+</body>
+</html>
+            {% load static %}
+<section id="stepsofdonation" style="padding: 60px 0; background: linear-gradient(135deg, #e3f2fd, #ffffff);">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 50px; font-size: 36px; font-weight: bold; color: #000000; animation: fadeInDown 1.5s ease-in-out;">
+            STEPS OF DONATION
+        </h2>
+
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+
+            <!-- Step 1 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Identification of a Potential Donor</h3>
+                    <p>A patient is declared brain dead or experiences circulatory death, meeting the criteria for organ donation.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Evaluation and Consent</h3>
+                    <p>Doctors assess organ viability and obtain consent from the donor’s family or prior registration.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Medical Maintenance of Donor</h3>
+                    <p>The donor's body is maintained on life support to ensure organ viability until retrieval.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Organ Recovery</h3>
+                    <p>Surgeons carefully retrieve organs in a controlled medical environment to ensure their viability.</p>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="timeline-item left animate">
+                <div class="content">
+                    <h3>Organ Transportation</h3>
+                    <p>The organs are rapidly transported to transplant centers using specialized preservation techniques.</p>
+                </div>
+                <div class="circle"></div>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="timeline-item right animate">
+                <div class="circle"></div>
+                <div class="content">
+                    <h3>Transplant Surgery</h3>
+                    <p>The recipient undergoes transplant surgery, followed by careful post-operative monitoring.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Timeline Container */
+    .timeline-container {
+        position: relative;
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Vertical Line */
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background-color: #007bff;
+        transform: translateX(-50%);
+    }
+
+    /* Timeline Item */
+    .timeline-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        margin-bottom: 50px;
+        width: 100%;
+        opacity: 0;  /* Initially hidden for animation */
+        transform: scale(0.8); /* Initially smaller */
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    /* Pop Effect */
+    .timeline-item.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    /* Left & Right Positioning */
+    .timeline-item.left {
+        flex-direction: row-reverse;
+    }
+
+    .timeline-item.right {
+        flex-direction: row;
+    }
+
+    /* Blue Dot */
+    .circle {
+        width: 20px;
+        height: 20px;
+        background: #007bff;
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        border: 4px solid white;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Content Box with Pop Effect */
+    .content {
+        background: white;
+        padding: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        width: 40%;
+        text-align: center;
+        transition: transform 0.4s ease-out;
+    }
+
+    /* Heading Alignment */
+    .content h3 {
+        font-size: 24px;
+        font-weight: bold;
+        color: #007bff;
+        text-align: center;
+    }
+
+    /* Responsive Fix */
+    @media (max-width: 768px) {
+        .timeline-item {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .timeline-item.left .content, 
+        .timeline-item.right .content {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+</style>
+
+<script>
+    // Scroll Animation for Steps
+    document.addEventListener("DOMContentLoaded", function () {
+        let timelineItems = document.querySelectorAll(".timeline-item");
+
+        function revealOnScroll() {
+            timelineItems.forEach((item) => {
+                let itemTop = item.getBoundingClientRect().top;
+                if (itemTop < window.innerHeight - 100) {
+                    item.classList.add("visible");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        revealOnScroll();
+    });
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation: A Gift of Life</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* Tailwind's gray-100 */
+        }
+        .main-container {
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+        }
+        .info-section {
+            background-color: white;
+            border-radius: 1.25rem; /* Rounded corners - Tailwind's rounded-xl */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05); /* Shadow - Tailwind's shadow-xl */
+            padding: 3rem;
+            margin-bottom: 3rem;
+        }
+        .section-title {
+            color: #6b7280; /* Tailwind's gray-500 */
+            transition: color 0.3s ease;
+            text-align: center;
+            font-size: 2.25rem; /* Tailwind's text-3xl */
+            font-weight: 600;  /* Tailwind's font-semibold */
+            margin-bottom: 2rem;
+        }
+        .section-title:hover {
+            color: #4f46e5; /* Tailwind's purple-600 on hover */
+        }
+        .paragraph-text {
+            color: #6b7280; /* Tailwind's gray-500 */
+            line-height: 1.8;
+            text-align: left;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .impact-point {
+            margin-bottom: 1.5rem;
+            padding-left: 2.5rem;
+            position: relative;
+            text-align: left;
+            transition: transform 0.3s ease-in-out, color 0.3s ease;
+        }
+        .impact-point:hover {
+            transform: translateX(8px);
+            color: #8b5cf6; /* Tailwind's purple-500 */
+        }
+        .impact-point::before {
+            content: '➤';  /* Using a fancy arrow */
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #a855f7; /* Tailwind's purple-400 */
+            font-size: 1.5em;
+            line-height: 1.5rem;
+        }
+        .emphasized {
+            font-weight: 700;
+            color: #6d28d9; /* Tailwind's purple-600 */
+            transition: color 0.2s ease;
+        }
+        .emphasized:hover{
+           color: #8b5cf6;
+        }
+
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-100 to-purple-100">
+    <a href="#Importance" class="block text-center text-blue-600 hover:text-blue-800 transition-colors duration-300 py-2 px-4">Go to Importance Section</a>
+    <main class="main-container container mx-auto">
+        <section id="Importance" class="info-section">
+            <h2 class="section-title">The Importance of Organ Donation</h2>
+            <div class="">
+                <p class="paragraph-text">
+                    Organ donation is a selfless act that can save or significantly improve the lives of others. When a person's organs fail, a transplant may be their only hope for survival.
+                </p>
+                <ul class="list-inside mt-6 text-gray-700">
+                    <li class="impact-point"><span class="emphasized">Life-Saving:</span> Transplants save thousands of lives each year.</li>
+                    <li class="impact-point"><span class="emphasized">Improved Quality of Life:</span> For recipients, a transplant can mean freedom from debilitating illness and a return to a normal life.</li>
+                    <li class="impact-point"><span class="emphasized">Hope:</span> Organ donation provides hope for those waiting for a life-saving transplant.</li>
+                    <li class="impact-point"><span class="emphasized">Restored Health:</span> Transplants can restore recipients to near-normal health, allowing them to return to work, family, and other activities.</li>
+                    <li class="impact-point"><span class="emphasized">Reduced Healthcare Costs:</span> In the long term, transplants can be more cost-effective than ongoing treatment for chronic organ failure.</li>
+                    <li class="impact-point"><span class="emphasized">A Lasting Legacy:</span> Organ donors leave behind a legacy of generosity and compassion.</li>
+                    <li class="impact-point"><span class="emphasized">Extended Life Expectancy:</span> For many with end-stage organ failure, transplantation significantly extends life expectancy.</li>
+                    <li class="impact-point"><span class="emphasized">Improved Mental Well-being:</span> The improved health and quality of life following a transplant can lead to better mental and emotional well-being.</li>
+                    <li class="impact-point"><span class="emphasized">Opportunity for Others:</span> Donated organs that are not a match for the primary recipient can be used for research and medical advancements.</li>
+                    <li class="impact-point"><span class="emphasized">Strengthened Communities:</span> Organ donation and transplantation strengthen communities by fostering a culture of giving and mutual support.</li>
+                    <li class="impact-point"><span class="emphasized">Eliminates Dependency:</span> Transplants can eliminate a recipient's dependency on machines, such as dialysis.</li>
+                    <li class="impact-point"><span class="emphasized">Increased Productivity:</span> By restoring health, transplants enable recipients to return to work and contribute to society.</li>
+                    <li class="impact-point"><span class="emphasized">Enables Parenthood:</span> For some, transplants can make it possible to have children.</li>
+                    <li class="impact-point"><span class="emphasized">Relief from Pain:</span> Transplants can alleviate chronic pain associated with organ failure.</li>
+                    <li class="impact-point"><span class="emphasized">Sense of Normalcy:</span> A transplant can provide a sense of normalcy for both the recipient and their family.</li>
+                    <li class="impact-point"><span class="emphasized">Honors the Donor's Memory:</span> Organ donation allows the donor's legacy to live on through the recipient.</li>
+                    <li class="impact-point"><span class="emphasized">Promotes Medical Advancement:</span> Each transplant contributes to the advancement of medical knowledge and techniques.</li>
+                    <li class="impact-point"><span class="emphasized">Global Impact:</span> Organ donation and transplantation are practiced worldwide, saving lives across the globe.</li>
+                    <li class="impact-point"><span class="emphasized">Ethical Practice:</span> Organ donation is conducted under strict ethical guidelines, ensuring fairness and respect for all involved.</li>
+                    <li class="impact-point"><span class="emphasized">Bridge to the Future:</span> Organ donation provides a bridge to a healthier future for recipients and their families.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation Reviews</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Light blue background */
+            color: #333;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: url('https://source.unsplash.com/1600x900/?healthcare,hospital') center/cover no-repeat;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            background-blend-mode: overlay;
+            background-color: rgba(0, 82, 204, 0.5); /* Blue overlay */
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 50px 10%;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #0052cc;
+        }
+
+        /* Testimonials */
+        .testimonial-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 20px;
+            width: 30%;
+            min-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-in-out;
+            border-left: 5px solid #0052cc; /* Blue accent */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #0052cc;
+        }
+
+        .testimonial-content {
+            text-align: left;
+        }
+
+        .testimonial-card p {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .testimonial-card h3 {
+            color: #0052cc; /* Blue text */
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            section {
+                padding: 40px 5%;
+            }
+
+            .testimonial-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .testimonial-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>   
+        <section id="about">
+            <!-- about content goes here -->
+        </section>     
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Organ Donation</title>
+        <style>
+            /* Global Styles */
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Arial', sans-serif;
+                background-color: #e3f2fd;
+                color: #333;
+                text-align: center;
+                overflow-x: hidden;
+            }
+    
+            /* Header */
+            header {
+                padding: 50px 20px;
+                animation: fadeIn 1.5s ease-in-out;
+            }
+    
+            h1 {
+                font-size: 45px;
+                font-weight: bold;
+                text-transform: uppercase;
+                color: #64b5f6;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+                animation: zoomIn 1.5s ease-in-out;
+            }
+    
+            p {
+                font-size: 20px;
+                max-width: 900px;
+                margin: 0 auto;
+                color: #444;
+            }
+    
+            /* Importance Section */
+            .importance-section {
+                background: white;
+                padding: 50px 20px;
+                max-width: 1000px;
+                margin: 40px auto;
+                border-radius: 15px;
+                box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+                animation: fadeIn 2s ease-in-out;
+            }
+    
+            .importance-section h2 {
+                font-size: 30px;
+                color: #64b5f6;
+                margin-bottom: 15px;
+            }
+    
+            .importance-section p {
+                font-size: 18px;
+                line-height: 1.8;
+            }
+    
+            /* Organ Sections */
+            .organ-container {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 30px;
+                padding: 40px 20px;
+                justify-content: center;
+                max-width: 1200px;
+                margin: auto;
+            }
+    
+            .organ-box {
+                position: relative;
+                width: 100%;
+                max-width: 250px;
+                height: 220px;
+                margin: 0 auto;
+                perspective: 1000px;
+            }
+    
+            .organ {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                transform-style: preserve-3d;
+                transition: transform 0.6s ease-in-out;
+            }
+    
+            .organ-box:hover .organ {
+                transform: rotateY(180deg);
+            }
+    
+            .organ-front,
+            .organ-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+                border-radius: 15px;
+                padding: 20px;
+                box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 26px;
+                font-weight: bold;
+                flex-direction: column;
+            }
+    
+            .organ-front {
+                background: white;
+                color: #64b5f6;
+            }
+    
+            .organ-back {
+                background: #64b5f6;
+                color: white;
+                transform: rotateY(180deg);
+                font-size: 18px;
+                text-align: center;
+                padding: 20px;
+                line-height: 1.6;
+            }
+    
+            /* Footer */
+            footer {
+                padding: 20px;
+                background: #64b5f6;
+                color: white;
+                margin-top: 40px;
+            }
+    
+            /* Keyframe Animations */
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+    
+            @keyframes zoomIn {
+                from { transform: scale(0.8); opacity: 0; }
+                to { transform: scale(1); opacity: 1; }
+            }
+    
+            /* Responsive Design */
+            @media (max-width: 900px) {
+                .organ-container {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+    
+            @media (max-width: 600px) {
+                .organ-container {
+                    grid-template-columns: repeat(1, 1fr);
+                }
+            }
+        </style>
+    </head>
+    <body>
+    
+        <!-- Header -->
+        <header>
+            <h1>About Organ Donation</h1>
+            <p>Saving Lives Through Generosity</p>
+        </header>
+    
+        <!-- Importance Section -->
+        <section class="importance-section">
+            <h2>Why Organ Donation is Important</h2>
+            <p>
+                Organ donation is a selfless act that has the power to save and transform lives. Thousands of people wait for transplants every year,
+                but the shortage of donors means many don’t survive. Just one donor can save up to 8 lives and improve many more through tissue donation.
+                By choosing to be a donor, you provide hope and a second chance to those in need.
+            </p>
+        </section>
+    
+        <!-- Organ Sections -->
+        <div class="organ-container">
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">❤️ <h2>Heart</h2></div>
+                    <div class="organ-back"><p>Pumps blood and oxygen throughout the body. A heart transplant can save lives.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🫁 <h2>Lungs</h2></div>
+                    <div class="organ-back"><p>Responsible for breathing. Lung transplants help people with severe lung diseases.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🩸 <h2>Kidneys</h2></div>
+                    <div class="organ-back"><p>Filter waste from blood. Kidney transplants remove the need for dialysis.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🦠 <h2>Liver</h2></div>
+                    <div class="organ-back"><p>Vital for digestion & detox. It can regenerate, making living donation possible.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🧠 <h2>Brain</h2></div>
+                    <div class="organ-back"><p>Brain donations contribute to medical research and understanding of neurological diseases.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">👁️ <h2>Eyes</h2></div>
+                    <div class="organ-back"><p>Corneal transplants restore sight to the visually impaired.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🦴 <h2>Bone Marrow</h2></div>
+                    <div class="organ-back"><p>Helps treat leukemia and blood disorders through transplantation.</p></div>
+                </div>
+            </div>
+    
+            <div class="organ-box">
+                <div class="organ">
+                    <div class="organ-front">🩻 <h2>Small Intestine</h2></div>
+                    <div class="organ-back"><p>The small intestine absorbs nutrients from food. Intestinal transplants help patients with severe digestive disorders.</p></div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </body>
+    </html>
+    
+    
+
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation</title>
+    <style>
+        /* Remove blue background */
+        .hero {
+            background-color: transparent; /* Removes blue background */
+            color: #333; /* Ensures text is visible */
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .testimonials {
+            background-color: transparent; /* Removes blue background */
+            padding: 50px 20px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Organ Donation: A Gift of Life</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        <style>
+            /* Enhanced General Styling */
+            body {
+                font-family: 'Poppins', sans-serif;
+                margin: 0;
+                padding: 0;
+                background: #f4f4f4; /* Light grey background */
+                color: #333;
+                overflow-x: hidden;
+                line-height: 1.7;
+            }
+    
+            .testimonials {
+                width: 90%;
+                max-width: 1200px; /* Increased max width for better spacing on larger screens */
+                margin: 60px auto; /* Increased top margin for more visual breathing room */
+                text-align: center;
+                padding: 60px 30px; /* Increased padding for more internal space */
+                border-radius: 12px;
+            }
+    
+            .testimonials h2 {
+                font-size: 3.2rem; /* Larger and more impactful title */
+                color: #007bff; /* Primary brand color */
+                margin-bottom: 40px; /* Increased bottom margin */
+                animation: fadeInTitle 1.2s ease-in-out;
+            }
+    
+            /* Enhanced Grid Layout */
+            .testimonial-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* More flexible grid for responsiveness */
+                gap: 40px; /* Increased gap for better separation */
+                padding: 40px;
+                justify-content: center;
+            }
+    
+            .testimonial-card {
+                background: #e9ecef; /* Light grey background for cards */
+                padding: 30px; /* Increased padding */
+                border-radius: 15px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                opacity: 1;
+                transform: scale(1);
+                transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            }
+    
+            .testimonial-card img {
+                width: 100px; /* Slightly larger profile images */
+                height: 100px;
+                border-radius: 50%;
+                margin-bottom: 25px; /* Increased margin */
+                border: 5px solid #ddd; /* More prominent border */
+                transition: transform 0.2s ease;
+            }
+    
+            .testimonial-card p {
+                font-style: italic;
+                margin-bottom: 25px; /* Increased margin */
+                line-height: 1.8; /* Improved readability */
+                color: #555; /* Darker text for better contrast */
+            }
+    
+            .testimonial-card h3 {
+                font-weight: 600;
+                color: #333;
+                margin-top: 15px;
+                font-size: 1.2rem;
+            }
+    
+            /* Enhanced Hover Effect */
+            .testimonial-card:hover {
+                transform: translateY(-5px) scale(1.03); /* Slight lift and scale on hover */
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18); /* More noticeable shadow on hover */
+            }
+    
+            .testimonial-card img:hover {
+                transform: scale(1.08);
+            }
+    
+            /* Hidden Testimonials */
+            .hidden {
+                display: none;
+                opacity: 0;
+                transform: translateY(10px) scale(0.95); /* Slight downward movement and scale down when hidden */
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+    
+            /* Enhanced Buttons */
+            .toggle-btn {
+                background: #007bff;
+                color: white;
+                border: none;
+                padding: 16px 30px; /* More substantial padding */
+                font-size: 1.1rem;
+                border-radius: 8px;
+                cursor: pointer;
+                margin-top: 40px; /* Increased margin */
+                transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+            }
+    
+            .toggle-btn:hover {
+                background: #0056b3;
+                transform: translateY(-3px); /* More noticeable lift on hover */
+                box-shadow: 0 7px 12px rgba(0, 0, 0, 0.2);
+            }
+    
+            /* Enhanced New Review Form Styles with Glass Effect */
+            .review-form-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 60px;
+                padding: 40px;
+                border-radius: 12px;
+                width: 95%; /* Increased width */
+                max-width: 700px; /* Increased maximum width */
+                margin-left: auto;
+                margin-right: auto;
+                background-color: rgba(255, 255, 255, 0.7); /* Semi-transparent white */
+                backdrop-filter: blur(10px); /* Apply the blur effect */
+                -webkit-backdrop-filter: blur(10px); /* For Safari */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: Add a subtle border */
+            }
+    
+            .review-form {
+                width: 100%;
+            }
+    
+            .review-form h3 {
+                font-size: 2.2rem;
+                color: #28a745;
+                margin-bottom: 30px;
+                text-align: center;
+            }
+    
+            .review-form label {
+                display: block;
+                margin-bottom: 12px;
+                font-weight: bold;
+                color: #555;
+                font-size: 1.1rem;
+            }
+    
+            .review-form input[type="text"],
+            .review-form select,
+            .review-form textarea {
+                width: calc(100% - 24px);
+                padding: 14px;
+                margin-bottom: 28px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+                font-size: 1.1rem;
+                box-sizing: border-box;
+                background-color: rgba(255, 255, 255, 0.8); /* Slightly less transparent input backgrounds */
+            }
+    
+            .review-form textarea {
+                resize: vertical;
+                min-height: 150px;
+            }
+    
+            .review-form select {
+                appearance: none;
+                background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23343a40" viewBox="0 0 4 5"><path d="M2 0L0 2h4L2 0z"/></svg>');
+                background-repeat: no-repeat;
+                background-position-x: 97%;
+                background-position-y: 50%;
+                background-size: 0.65em auto;
+                padding-right: 2.5em;
+                background-color: rgba(255, 255, 255, 0.8); /* Slightly less transparent select background */
+            }
+    
+            .review-form button[type="submit"] {
+                background-color: #28a745;
+                color: white;
+                padding: 16px 32px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 1.2rem;
+                transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+                width: 100%;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+                margin-top: 15px;
+            }
+    
+            .review-form button[type="submit"]:hover {
+                background-color: #218838;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+    
+            #newReviews {
+                margin-top: 60px;
+                padding: 40px;
+                border-top: 1px solid #ddd;
+                text-align: center;
+            }
+    
+            #newReviews h3 {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+                color: #007bff;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <section class="testimonials">
+            <section id="reviews">
+            </section>
+            <h2>Voices of Hope</h2>
+            <p style="font-size: 1.1rem; color: #555; margin-bottom: 30px;">Read inspiring stories from those touched by the gift of organ donation.</p>
+            <div id="testimonialContainer" class="testimonial-container">
+                {% for review in reviews %}
+                    <div class="testimonial-card {% if forloop.counter > 3 %}hidden{% endif %}">
+                        <img src="/static/images/{% if review.gender == 'M' %}boy.png{% else %}girl.png{% endif %}" alt="{{ review.name }}">
+                        <p>"{{ review.review_text }}"</p>
+                        <h3>- {{ review.name }}</h3>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if reviews.count > 3 %}
+                <button id="toggleButton" class="toggle-btn" onclick="toggleReviews()">Show More</button>
+            {% endif %}
+    
+            <div class="review-form-container">
+                <div class="review-form" id="reviewForm">
+                    <h3>Share Your Story</h3>
+                    <form id="addReviewForm">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+    
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select your gender</option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+    
+                        <label for="reviewText">Your Review:</label>
+                        <textarea id="reviewText" name="reviewText" placeholder="Share your experience" required></textarea>
+    
+                        <button type="submit">Submit Your Review</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <script>
+            const isAuthenticated = "{{ request.user.is_authenticated }}";
+        </script>
+        <script src="/static/js/script.js"></script>
+    </body>
+    </html>
+
+        <footer class="site-footer section-padding text-center text-lg-start" id="contact">
+            <div class="container">
+                <div class="row justify-content-between gy-4 text-lg-start">
+        
+                    <!-- Opening Hours Section -->
+                    <div class="col-lg-4 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Opening Hours</h5>
+                        <ul class="list-group list-group-flush mx-auto" style="max-width: 280px;">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Sunday:</span> <span>Closed</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Mon - Fri:</span> <span>8:00 AM - 3:30 PM</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Saturday:</span> <span>10:30 AM - 5:30 PM</span>
+                            </li>
+                        </ul>
+                    </div>
+        
+                    <!-- Our Clinic Section -->
+                    <div class="col-lg-3 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Our Clinic</h5>
+                        <p class="text-start mb-1">
+                            <a href="mailto:organconnect@gmail.com" class="text-decoration-none text-dark email-hover" id="email">
+                                organconnect@gmail.com
+                            </a>
+                            <span class="copy-icon">📋</span>
+                        </p>
+                        <p class="text-start">123 Digital Art Street, San Diego, CA 92123</p>
+                    </div>
+        
+                    <!-- Social Media Section -->
+                    <div class="col-lg-3 col-md-6 col-12 fade-in">
+                        <h5 class="fw-bold glow-effect text-center text-lg-start">Socials</h5>
+                        <div class="d-flex justify-content-lg-start justify-content-center">
+                            <a href="#" class="social-icon-link bi bi-facebook me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-twitter me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-instagram me-3"></a>
+                            <a href="#" class="social-icon-link bi bi-youtube"></a>
+                        </div>
+                    </div>
+        
+                </div>
+        
+                <!-- Copyright Section -->
+                <div class="text-center mt-4 pt-3 border-top fade-in">
+                    <p class="copyright-text mb-0">Copyright © ORGAN CONNECT 2025</p>
+                </div>
+            </div>
+        </footer>
+        
+        <style>
+            /* Footer Styling */
+            .site-footer {
+                background: linear-gradient(to right, #64b5f6, #bbdefb);
+                color: white;
+                padding: 50px 20px;
+                animation: fadeIn 1.5s ease-in-out;
+            }
+        
+            .site-footer h5 {
+                color: #fff;
+                font-size: 22px;
+                text-transform: uppercase;
+                margin-bottom: 15px;
+                transition: transform 0.3s ease, text-shadow 0.3s ease;
+            }
+        
+            .glow-effect:hover {
+                transform: scale(1.05);
+                text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+            }
+        
+            .list-group-item {
+                background: transparent;
+                color: white;
+                border: none;
+                font-size: 16px;
+            }
+        
+            /* Social Media Icons */
+            .social-icon-link {
+                font-size: 24px;
+                color: white;
+                transition: transform 0.3s ease, color 0.3s ease;
+                display: inline-block;
+            }
+        
+            .social-icon-link:hover {
+                transform: scale(1.2) rotate(5deg);
+                color: #ffeb3b;
+            }
+        
+            /* Email Hover + Copy Animation */
+            .email-hover {
+                transition: color 0.3s ease;
+                cursor: pointer;
+            }
+        
+            .email-hover:hover {
+                color: #ffeb3b;
+            }
+        
+            .copy-icon {
+                font-size: 18px;
+                margin-left: 5px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+        
+            .copy-icon:hover {
+                transform: scale(1.2);
+                color: #ffeb3b;
+            }
+        
+            /* Fade-in Animation */
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        
+            .fade-in {
+                opacity: 0;
+                transition: opacity 0.8s ease, transform 0.8s ease;
+            }
+        
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .site-footer {
+                    text-align: center;
+                }
+            }
+        </style>
+        
+        <script>
+            // Scroll Animation - Fade in Elements
+            document.addEventListener("DOMContentLoaded", function () {
+                let fadeElements = document.querySelectorAll(".fade-in");
+        
+                function revealOnScroll() {
+                    let scrollPosition = window.scrollY + window.innerHeight;
+                    fadeElements.forEach(element => {
+                        let elementTop = element.offsetTop;
+                        if (scrollPosition > elementTop + 50) {
+                            element.style.opacity = "1";
+                            element.style.transform = "translateY(0)";
+                        }
+                    });
+                }
+        
+                window.addEventListener("scroll", revealOnScroll);
+                revealOnScroll();
+            });
+        
+            // Email Copy to Clipboard
+            {% comment %} document.getElementById("email").addEventListener("click", function () {
+                let emailText = this.textContent;
+                navigator.clipboard.writeText(emailText).then(() => {
+                    alert("Email copied to clipboard!");
+                });
+            }); {% endcomment %}
+        </script>
+        
+        
+        
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="/static/assets/js/jquery.min.js"></script>
+        <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/assets/js/owl.carousel.min.js"></script>
+        <script src="/static/assets/js/scrollspy.min.js"></script>
+        <script src="/static/assets/js/custom.js"></script>
+<!--
+
+TemplateMo 566 Medic Care
+
+https://templatemo.com/tm-566-medic-care
+
+-->
+    </body>
+</html>

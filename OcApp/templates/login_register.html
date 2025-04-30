@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organ Donation - Login & Register</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* ✅ Background Effect */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ✅ Glass Texture Background */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("{% static 'images/login11.jpg' %}") no-repeat center center/cover;
+            filter: blur(5px);
+            z-index: -2;
+        }
+
+        /* ✅ Glass Texture Overlay */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%
+            );
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        /* ✅ Glassmorphism Form */
+        .wrapper {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            width: 450px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            /* Remove relative positioning here */
+        }
+
+        /* ✅ Black Text */
+        h2, label, p {
+            color: #000;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* ✅ Input Fields - No Animation */
+        .input-field {
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .input-field input,
+        .input-field select,
+        .input-field textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* ✅ Checkbox Styling */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ✅ Button Styling */
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ff5733;
+        }
+
+        /* ✅ Form Toggle */
+        .hidden {
+            display: none;
+        }
+        .messages{
+            position: absolute;
+            font-weight: 600;
+            right: 10%;
+            top: 30%;
+            color: red;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        /* ✅ Logout Message Styling - Bottom of Page */
+        .logout-message {
+            position: fixed; /* Fixed position relative to the viewport */
+            bottom: 5px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(255, 0, 0, 0.8); /* Red background for emphasis */
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        /* ✅ Back Button Styling - Bottom of Page */
+        .back-button {
+            position: fixed; /* Fixed position relative to the viewport */
+            bottom: 50px; /* Adjust as needed, below the logout message */
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s;
+            z-index: 10; /* Ensure it's above other elements */
+        }
+
+        .back-button:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class= "messages">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% if logged_out %}
+        <div class="logout-message">You have been logged out</div>
+    {% endif %}
+
+    <div class="wrapper">
+        <form id="login-form" method="POST">
+            {% csrf_token %}
+            <h2>Login</h2>
+            <input type="hidden" name="action" value="login">
+            <div class="input-field">
+                <label>Username</label>
+                <input type="text" name="username" id="login-email" placeholder="Enter your Username" required>
+            </div>
+            <div class="input-field">
+                <label>Password</label>
+                <input type="password" name="password" id="login-password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit">Log In</button>
+            <div class="toggle-link">
+                <p>Don't have an account? <a href="#" onclick="toggleForm()">Register</a></p>
+            </div>
+        </form>
+
+        <form id="register-form" class="hidden" method="POST">
+            {% csrf_token %}
+            <h2>Register</h2>
+            <input type="hidden" name="action" value="register">
+            <div class="form-container">
+                <div class="input-field">
+                    <label>Full Name</label>
+                    <input type="text" name="name" id="register-name" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-field">
+                    <label>Email</label>
+                    <input type="email" name="email" id="register-email" placeholder="Enter your email" required>
+                </div>
+                <div class="input-field">
+                    <label>Username</label>
+                    <input type="text" name="username" id="register-phone" placeholder="Enter your Username" required>
+                </div>
+                <div class="input-field">
+                    <label>Password</label>
+                    <input type="password" name="password" id="register-phone" placeholder="Enter your Password" required>
+                </div>
+                <div class="input-field">
+                    <label for="role">User Role</label>
+                    <select id="role" name="role" required>
+                        <option value="" disabled selected>Select your role</option>
+                        <option value="doctor">Doctor</option>
+                        <option value="facility">Hospital/Facility</option>
+                        <option value="donor">Donor</option>
+                        <option value="recipient">Recipient</option>
+                    </select>
+                </div>
+
+                <button type="submit">Register</button>
+                <div class="toggle-link">
+                    <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <a href="/" class="back-button">Back</a>
+
+    <script>
+        function toggleForm() {
+            document.getElementById('login-form').classList.toggle('hidden');
+            document.getElementById('register-form').classList.toggle('hidden');
+        }
+    </script>
+
+</body>
+</html>

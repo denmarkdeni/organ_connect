@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin-Dashboard</title>
+  <link rel="stylesheet" href="/static/css/dashboard.css" />
+  <style>
+    /* Blurred background setup */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    .background-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('/static/images/dashboardbg3333.jpg') no-repeat center center;
+      background-size: cover;
+      filter: blur(10px);
+      z-index: -1;
+    }
+
+    body {
+      display: flex;
+    }
+
+    aside {
+      width: 250px;
+      background-color: #d32f2f;
+      color: white;
+      padding: 20px;
+      height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    aside h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ffebee;
+      animation: slideInLeft 0.8s ease-out;
+    }
+
+    aside nav a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: #ffebee;
+      transition: transform 0.3s ease-in-out;
+      animation: fadeIn 1.2s ease-out;
+      user-select: all;
+    }
+
+    aside nav a:hover {
+      transform: scale(1.03);
+      background-color: #b71c1c;
+    }
+
+    .logout-btn {
+      display: block;
+      background-color: #b71c1c;
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: transform 0.3s ease-in-out;
+      margin: auto 0 20px 0;
+      width: 150px;
+      align-self: center;
+      animation: fadeIn 1.5s ease-out;
+      user-select: all;
+    }
+
+    .logout-btn:hover {
+      transform: scale(1.03);
+      background-color: #9a0007;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      min-height: 100vh;
+      overflow-y: auto;
+      z-index: 1;
+    }
+
+    .header {
+      background-color: rgba(255, 235, 238, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .account-details {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .profile-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-left: 15px;
+      object-fit: cover;
+    }
+
+    .account-info {
+      color: #d32f2f;
+      text-align: right;
+      margin-right: 15px;
+    }
+
+    .account-info h3 {
+      animation: fadeIn 1.5s ease-out;
+      user-select: all;
+    }
+
+    .account-info p {
+      animation: fadeIn 1.8s ease-out;
+      user-select: all;
+    }
+
+    .section {
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h3,
+    .section p {
+      animation: fadeIn 1.5s ease-out;
+      transition: transform 0.3s ease-in-out;
+      user-select: all;
+    }
+
+    .section h3:hover,
+    .section p:hover {
+      transform: scale(1.015);
+    }
+
+    ::selection {
+      background-color: #ffcdd2;
+      color: #d32f2f;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Blurred background -->
+  <div class="background-blur"></div>
+
+  <!-- Sidebar -->
+  <aside>
+    <h2>STAFF PANEL</h2>
+    <nav>
+      <a href="#">Home</a>
+      <a href="{% url 'update_staff' %}">Profile</a>
+      <a href="{% url 'notification' %}">Notifications</a>
+      <a href="{% url 'donor_list' %}">Donors List</a>
+      <a href="{% url 'organ_inventory' %}">Organ Inventory</a>
+      <a href="{% url 'organ_matching' %}">Organ Matching</a>
+      <a href="{% url 'organ_approval' %}">Organ Approval</a>
+      <a href="{% url 'facility_schedule' %}">Schedule</a>
+    </nav>
+    <a href="{% url 'log_out' %}" class="logout-btn">Logout</a>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="header">
+      <div class="account-details">
+        <img src="/static/images/doctor_profile.png" alt="Profile Icon" class="profile-icon">
+        <div class="account-info">
+          <h3>Welcome, {{ request.user.last_name }}</h3>
+          <p>Email: {{ request.user.email }}</p>
+          <p>Role: Staff</p>
+          {% if messages %}
+            {% for message in messages %}
+              <p style="color: green;">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Home</h3>
+      <p>Welcome to the Organ Connect dashboard! Here, you can manage your profile, view notifications, and perform various actions based on your role.</p>
+    </div>
+
+    <div class="section">
+      <h3>Manage Profile</h3>
+      <p>Click here to edit your profile information, update your contact details, or change your password.</p>
+    </div>
+
+    <div class="section">
+      <h3>Notifications</h3>
+      <p>You have 3 new notifications. Check them for updates regarding your organ donation status and recipient information.</p>
+    </div>
+  </div>
+
+</body>
+</html>

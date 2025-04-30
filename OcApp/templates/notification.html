@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facility - Schedule Operation</title>
+    <link rel="stylesheet" href="/static/css/notification.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #e0f2fe;
+            color: black;
+            margin: 0;
+            padding: 20px;
+            background-image: url('static/images/notbg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            backdrop-filter: blur(5px);
+            animation: backgroundZoom 10s linear infinite alternate;
+        }
+
+        @keyframes backgroundZoom {
+            0% {
+                background-size: 100%;
+            }
+            100% {
+                background-size: 110%;
+            }
+        }
+
+        h1 {
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            align-self: center;
+        }
+
+        .notification {
+            background-color: rgba(70 ,122 ,159, 0.8);
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.5s ease-out;
+            width: 80%;
+            align-self: center;
+        }
+
+        .not-head {
+            font-weight: bold;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .not-time {
+            font-size: 0.8em;
+            color: #60a5fa;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .notification-message {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.8);
+            margin-bottom: 10px;
+            color:white;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #95a0b1;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            width: calc(100% - 18px);
+            margin-bottom: 10px;
+        }
+
+        button, .btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #2563eb;
+        }
+
+        .mark-read-button {
+            background-color: #60a5fa;
+            margin-top: 10px;
+        }
+
+        .mark-read-button:hover {
+            background-color: #3b82f6;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .no-notifications {
+            text-align: center;
+            font-style: italic;
+            color: black; /* Changed notification message color to black */
+            margin-top: auto;
+            margin-bottom: auto;
+            width: 80%;
+            align-self: center;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        strong{
+            color:#2e0ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Notifications</h1>
+
+    {% for notification in notifications %}
+        <div class="notification">
+            <p>{{ notification.message }}</p>
+            <small><em>From: {{ notification.sender.username }} from {{ notification.sender.staff.hospital }}</em> |
+            <a href="{% url 'mark_as_read' notification.id %}">Mark as Read</a></small>
+    
+            {% if not notification.reply_message %}
+            <form method="post" class="reply-form" data-id="{{ notification.id }}">
+                {% csrf_token %}
+                <input type="text" name="reply_text" placeholder="Reply here..." required>
+                <button type="submit">Reply</button>
+            </form>
+            {% else %}
+            <p><strong>Your Reply:</strong> {{ notification.reply_message }}</p>
+            {% endif %}<br>
+            {% if notification.type == 'schedule message' %}
+            <a href="{% url 'schedule_pdf' notification.organ_match_id %}" class="btn">View Document</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    
+    <script>
+    document.querySelectorAll(".reply-form").forEach(form => {
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            let formData = new FormData(this);
+            let notificationId = this.getAttribute("data-id");
+    
+            fetch(`/reply-notification/${notificationId}/`, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Console - Organ Donation</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="/static/js/utils.js" defer></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('/static/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            padding: 20px;
+            backdrop-filter: blur(5px); /* Add a slight blur to the background */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #bbdefb;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #1565c0;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .card {
+            border: 1px solid #90caf9;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            padding: 25px;
+            background: rgba(232, 245, 255, 0.85);
+            box-shadow: 0 3px rgba(0, 0, 0, 0.08);
+            {% comment %} backdrop-filter: blur(12px); {% endcomment %}
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 5px  rgba(0, 0, 0,0.5);
+        }
+
+        .btn-success {
+            background-color: #1e88e5;
+            border: none;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: block;
+            margin: 20px auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-success:hover {
+            background-color: #1565c0;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="container">
+        <h2>Organ Donor Registration</h2>
+        <form id="donorForm">
+            <div class="card">
+                <h5>Donor Information</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="name" value="{{ user.last_name }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" value="{{ user.email }}" required>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-control" id="phone" value="{{ user.donor.phone }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" id="age" value="{{ user.donor.age }}" required>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Blood Type</label>
+                        <select class="form-control" id="bloodType" name="blood_type" required>
+                            <option value="">Select Blood Type</option>
+                            <option value="A+" {% if user.donor.blood_type == "A+" %}selected{% endif %}>A+</option>
+                            <option value="A-" {% if user.donor.blood_type == "A-" %}selected{% endif %}>A-</option>
+                            <option value="B+" {% if user.donor.blood_type == "B+" %}selected{% endif %}>B+</option>
+                            <option value="B-" {% if user.donor.blood_type == "B-" %}selected{% endif %}>B-</option>
+                            <option value="O+" {% if user.donor.blood_type == "O+" %}selected{% endif %}>O+</option>
+                            <option value="O-" {% if user.donor.blood_type == "O-" %}selected{% endif %}>O-</option>
+                            <option value="AB+" {% if user.donor.blood_type == "AB+" %}selected{% endif %}>AB+</option>
+                            <option value="AB-" {% if user.donor.blood_type == "AB-" %}selected{% endif %}>AB-</option>
+                        </select>                        
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <h5>Organ Donation Preferences</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="allOrgans" onchange="toggleOrgans(this)">
+                    <label class="form-check-label">Donate All Organs</label>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="heart"> Heart</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="lungs"> Lungs</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="liver"> Liver</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="kidneys"> Kidneys</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="pancreas"> Pancreas</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="corneas"> Corneas</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="intestines"> Intestines</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="skin"> Skin</div>
+                    <div class="col-md-4"><input class="form-check-input organ-check" type="checkbox" id="bone"> Bone</div>
+                </div>
+            </div>
+            <div class="card">
+                <h5>Medical History</h5>
+                <textarea class="form-control" id="medical_history" name="medical_history" rows="4" required>{{ user.donor.medical_history }}</textarea>
+            </div>
+            <center>
+                <button type="submit" class="btn btn-success">Submit Registration</button>
+            </center>
+        </form>
+    </div>
+
+    <script>
+        function toggleOrgans(checkbox) {
+            let organCheckboxes = document.querySelectorAll(".organ-check");
+            organCheckboxes.forEach(input => input.disabled = checkbox.checked);
+        }
+
+        document.getElementById("donorForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let donorData = {
+                name: document.getElementById("name").value,
+                email: document.getElementById("email").value,
+                phone: document.getElementById("phone").value,
+                age: document.getElementById("age").value,
+                bloodType: document.getElementById("bloodType").value,
+                medical_history: document.getElementById("medical_history").value,
+                organs: document.getElementById("allOrgans").checked
+                    ? ["All Organs"]
+                    : Array.from(document.querySelectorAll(".organ-check:checked")).map(input => input.id)
+            };
+
+            fetch("/save_donor/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")  // CSRF token for security
+                },
+                body: JSON.stringify(donorData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message || data.error);
+                if (data.message) document.getElementById("donorForm").reset();
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+
+</body>
+</html>

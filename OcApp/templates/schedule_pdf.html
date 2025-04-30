@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      margin: 40px;
+      color: #333;
+    }
+
+    #scheduleContent {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .info p {
+      font-size: 16px;
+      margin: 10px 0;
+      line-height: 1.6;
+    }
+
+    strong {
+      color: #34495e;
+    }
+
+    .btn-download {
+      display: block;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-download:hover {
+      background-color: #0056b3;
+    }
+
+    .emoji {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+    <div id="scheduleContent" class="info">
+        <div class="emoji">💙</div>
+        <h1>Welcome, {{ request.user.username }}!</h1>
+        <div class="subtitle">Your organ transplant appointment has been scheduled successfully.</div>
+        <p><strong>Date & Time:</strong> {{ schedule.operation_schedule_date }}</p>
+        <p><strong>Hospital:</strong> {{ schedule.doctor.hospital.name }}</p>
+        <p><strong>Location:</strong> {{ schedule.doctor.hospital.address }}</p>
+        <p><strong>Contact:</strong> {{ schedule.doctor.hospital.contact }}</p>
+        <p><strong>Recipient:</strong> {{ schedule.recipient.fullname }} ({{ schedule.recipient.user.email }})</p>
+        <p><strong>Donor:</strong> {{ schedule.organ.donor.fullname }} ({{ schedule.organ.donor.user.email }})</p>
+        <p><strong>Doctor:</strong> {{ schedule.doctor.user.get_full_name }} ({{ schedule.doctor.user.email }})</p>
+        <center><p> <em>All are Approved by 🫀 {{ schedule.reviewed_by.get_full_name }} </em></p></center>
+    </div>
+
+    <button class="btn-download" onclick="downloadPDF()">Download PDF</button>
+    <button class="btn-download" onclick="window.history.back()">Go Back</button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById('scheduleContent');
+      html2pdf().from(element).save('appointment_schedule.pdf');
+    }
+    
+  </script>
+</body>
+</html>
