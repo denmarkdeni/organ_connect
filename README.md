@@ -23,7 +23,7 @@ Organ Connect is a django based website connecting Doctors , Hospital Staffs , D
 
 ## 🧪 Installation
 ```bash
-git clone https://github.com/username/fakedetect.git
+git clone https://github.com/denmarkdeni/organ_connect.git
 cd organ_connect
 pip install -r requirements.txt
 python manage.py runserver
