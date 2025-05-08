@@ -16,8 +16,8 @@ Organ Connect is a django based website connecting Doctors , Hospital Staffs , D
 - Database: SQLite
 
 ## 📷 Screenshots
-![screenshot1](url)
-![screenshot2](url)
+![screenshot1]("https://github.com/denmarkdeni/organ_connect/blob/main/OcApp/static/images/organ_connect_dash.png")
+
 
 ## 🧪 Installation
 ```bash
